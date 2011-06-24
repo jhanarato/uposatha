@@ -4,7 +4,7 @@ from datetime import date, timedelta
 class Uposatha:
     # A simple formatting method
     def formatWeek(self, weekNum, startDate, endDate):
-        return "Week %02d: %s TO %s\n" % (weekNum, startDate.isoformat(), endDate.isoformat() + "\n")
+        return "Week %02d: %s TO %s" % (weekNum, startDate.isoformat(), endDate.isoformat())
 
     # The original script, now being refactored
     def originalScript(self, outputFile):  

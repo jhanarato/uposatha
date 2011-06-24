@@ -16,12 +16,15 @@ class UposathaTest(unittest.TestCase):
             os.remove(self.unit_out)
 
     def testFormatWeek(self):
-        startDate = datetime.date(2011, 07, 15)
+        startDate = datetime.date(2011, 07, 16)
         endDate = datetime.date(2011, 07, 23)
         weekNum = 1
-
+        expected = "Week 01: 2011-07-16 TO 2011-07-23"
+        
         uposathaInstance = uposatha.Uposatha()
-        formatted = uposathaInstance.formatWeek(weekNum, startDate, endDate);
+        actual = uposathaInstance.formatWeek(weekNum, startDate, endDate)
+        self.assertMultiLineEqual(expected, actual)
+        
         
     def testOriginalScript(self):
         
