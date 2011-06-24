@@ -31,57 +31,79 @@ class Uposatha:
         
         out.write(self.formatWeek(1, self.nextWeekStartDate, self.nextWeekEndDate) + "\n")
 
-        week2start = week1end + timedelta(1)
-        week2end =   week1end + timedelta(self.rainsWeeks[1])
+        self.doNextWeek(2, self.nextWeekEndDate)
+        
+        week2start = self.nextWeekStartDate
+        week2end = self.nextWeekEndDate
 
         out.write(self.formatWeek(2, week2start, week2end) + "\n")
 
-        week3start = week2end + timedelta(1)
-        week3end =   week2end + timedelta(self.rainsWeeks[2])
+        self.doNextWeek(3, self.nextWeekEndDate)
+        
+        week3start = self.nextWeekStartDate
+        week3end = self.nextWeekEndDate
 
         out.write(self.formatWeek(3, week3start, week3end) + "\n")
 
-        week4start = week3end + timedelta(1)
-        week4end =   week3end + timedelta(self.rainsWeeks[3])
+        self.doNextWeek(4, self.nextWeekEndDate)
+        
+        week4start = self.nextWeekStartDate
+        week4end = self.nextWeekEndDate
 
         out.write(self.formatWeek(4, week4start, week4end) + "\n")
 
-        week5start = week4end + timedelta(1)
-        week5end =   week4end + timedelta(self.rainsWeeks[4])
+        self.doNextWeek(5, self.nextWeekEndDate)
+        
+        week5start = self.nextWeekStartDate
+        week5end = self.nextWeekEndDate
 
         out.write(self.formatWeek(5, week5start, week5end) + "\n")
 
-        week6start = week5end + timedelta(1)
-        week6end =   week5end + timedelta(self.rainsWeeks[5])
+        self.doNextWeek(6, self.nextWeekEndDate)
+        
+        week6start = self.nextWeekStartDate
+        week6end = self.nextWeekEndDate
 
         out.write(self.formatWeek(6, week6start, week6end) + "\n")
 
-        week7start = week6end + timedelta(1)
-        week7end =   week6end + timedelta(self.rainsWeeks[6])
-
+        self.doNextWeek(7, self.nextWeekEndDate)
+        
+        week7start = self.nextWeekStartDate
+        week7end = self.nextWeekEndDate
+        
         out.write(self.formatWeek(7, week7start, week7end) + "\n")
 
-        week8start = week7end + timedelta(1)
-        week8end =   week7end + timedelta(self.rainsWeeks[7])
+        self.doNextWeek(8, self.nextWeekEndDate)
+        
+        week8start = self.nextWeekStartDate
+        week8end = self.nextWeekEndDate
 
         out.write(self.formatWeek(8, week8start, week8end) + "\n")
 
-        week9start = week8end + timedelta(1)
-        week9end =   week8end + timedelta(self.rainsWeeks[8])
+        self.doNextWeek(9, self.nextWeekEndDate)
+        
+        week9start = self.nextWeekStartDate
+        week9end = self.nextWeekEndDate
 
         out.write(self.formatWeek(9, week9start, week9end) + "\n")
 
-        week10start = week9end + timedelta(1)
-        week10end =   week9end + timedelta(self.rainsWeeks[9])
+        self.doNextWeek(10, self.nextWeekEndDate)
+        
+        week10start = self.nextWeekStartDate
+        week10end = self.nextWeekEndDate
 
         out.write(self.formatWeek(10, week10start, week10end) + "\n")
 
-        week11start = week10end + timedelta(1)
-        week11end =   week10end + timedelta(self.rainsWeeks[10])
+        self.doNextWeek(11, self.nextWeekEndDate)
+        
+        week11start = self.nextWeekStartDate
+        week11end = self.nextWeekEndDate
 
         out.write(self.formatWeek(11, week11start, week11end) + "\n")
 
-        week12start = week11end + timedelta(1)
-        week12end =   week11end + timedelta(self.rainsWeeks[11])
+        self.doNextWeek(12, self.nextWeekEndDate)
+        
+        week12start = self.nextWeekStartDate
+        week12end = self.nextWeekEndDate
 
         out.write(self.formatWeek(12, week12start, week12end))
