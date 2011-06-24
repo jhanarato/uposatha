@@ -2,7 +2,8 @@ The code in this repository provides an API for calculating the moon days for th
 lunar calendar. I have a very simple python script which for now simply outputs in text 
 format the dates for the moon days of the rains retreat (vassa). The plan is to play around
 a bit, refactor the code into a more useful class or set of classes to calculate the
-moon days in the past and future. Eventually I might consider a Java port.
+moon days in the past and future. Eventually I might consider a Java port. Someone also
+suggested JavaScript. A TODO for sure. 
 
 --
 Bhante Jhanarato
