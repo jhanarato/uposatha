@@ -2,9 +2,11 @@ import datetime
 from datetime import date, timedelta
 
 class Uposatha:
-    def printWeek(self, toFile, weekNum, startDate, endDate):
-        outFile.write("Week %02d: %s TO %s\n" % (weekNum, startDate.isoformat(), endDate.isoformat() + "\n"))
+    # A simple formatting method
+    def formatWeek(self, weekNum, startDate, endDate):
+        return "Week %02d: %s TO %s\n" % (weekNum, startDate.isoformat(), endDate.isoformat() + "\n")
 
+    # The original script, now being refactored
     def originalScript(self, outputFile):  
         dayBeforeRains = datetime.date(2011, 07, 15) # First day of rains, after uposatha
         week1start = dayBeforeRains + timedelta(1)

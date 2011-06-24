@@ -6,11 +6,6 @@ import unittest
 import uposatha
 from datetime import date
 
-##startDate = datetime.date(2011, 07, 15)
-##endDate = datetime.date(2011, 07, 23)
-##weekNum = 1
-##
-##uposatha.printWeek(weekNum, startDate, endDate)
     
 class UposathaTest(unittest.TestCase):
     unit_good = "test_output.txt"
@@ -19,6 +14,14 @@ class UposathaTest(unittest.TestCase):
     def setUp(self):
         if os.path.exists(self.unit_out):
             os.remove(self.unit_out)
+
+    def testFormatWeek(self):
+        startDate = datetime.date(2011, 07, 15)
+        endDate = datetime.date(2011, 07, 23)
+        weekNum = 1
+
+        uposathaInstance = uposatha.Uposatha()
+        formatted = uposathaInstance.formatWeek(weekNum, startDate, endDate);
         
     def testOriginalScript(self):
         
