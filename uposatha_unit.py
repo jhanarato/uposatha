@@ -24,8 +24,7 @@ class UposathaTest(unittest.TestCase):
         uposathaInstance = uposatha.Uposatha()
         actual = uposathaInstance.formatWeek(weekNum, startDate, endDate)
         self.assertMultiLineEqual(expected, actual)
-        
-        
+             
     def testOriginalScript(self):
         
         uposathaInstance = uposatha.Uposatha()
