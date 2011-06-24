@@ -10,7 +10,9 @@ class Uposatha:
     
     # A simple formatting method
     def formatWeek(self, weekNum, startDate, endDate):
-        return "Week %02d: %s TO %s" % (weekNum, startDate.isoformat(), endDate.isoformat())
+        return "Week %02d: %s TO %s" % (weekNum,
+                                        self.nextWeekStartDate.isoformat(),
+                                        self.nextWeekEndDate.isoformat())
 
     # Method extracted to avoid repertition
     def doNextWeek(self, weekNum, lastWeekEndDate):
