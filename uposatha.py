@@ -9,7 +9,7 @@ class Uposatha:
     nextWeekEndDate = None   # initialised by doNextWeek
     
     # A simple formatting method
-    def formatWeek(self, weekNum, startDate, endDate):
+    def formatWeek(self, weekNum):
         return "Week %02d: %s TO %s" % (weekNum,
                                         self.nextWeekStartDate.isoformat(),
                                         self.nextWeekEndDate.isoformat())
@@ -28,48 +28,48 @@ class Uposatha:
 
         out = open(outputFile, 'w')
         
-        out.write(self.formatWeek(1, self.nextWeekStartDate, self.nextWeekEndDate) + "\n")
+        out.write(self.formatWeek(1) + "\n")
 
         self.doNextWeek(2, self.nextWeekEndDate)
         
-        out.write(self.formatWeek(2, self.nextWeekStartDate, self.nextWeekEndDate) + "\n")
+        out.write(self.formatWeek(2) + "\n")
 
         self.doNextWeek(3, self.nextWeekEndDate)      
 
-        out.write(self.formatWeek(3, self.nextWeekStartDate, self.nextWeekEndDate) + "\n")
+        out.write(self.formatWeek(3) + "\n")
 
         self.doNextWeek(4, self.nextWeekEndDate)
         
-        out.write(self.formatWeek(4, self.nextWeekStartDate, self.nextWeekEndDate) + "\n")
+        out.write(self.formatWeek(4) + "\n")
 
         self.doNextWeek(5, self.nextWeekEndDate)
         
-        out.write(self.formatWeek(5, self.nextWeekStartDate, self.nextWeekEndDate) + "\n")
+        out.write(self.formatWeek(5) + "\n")
 
         self.doNextWeek(6, self.nextWeekEndDate)
         
-        out.write(self.formatWeek(6, self.nextWeekStartDate, self.nextWeekEndDate) + "\n")
+        out.write(self.formatWeek(6) + "\n")
 
         self.doNextWeek(7, self.nextWeekEndDate)
         
-        out.write(self.formatWeek(7, self.nextWeekStartDate, self.nextWeekEndDate) + "\n")
+        out.write(self.formatWeek(7) + "\n")
 
         self.doNextWeek(8, self.nextWeekEndDate)
         
-        out.write(self.formatWeek(8, self.nextWeekStartDate, self.nextWeekEndDate) + "\n")
+        out.write(self.formatWeek(8) + "\n")
 
         self.doNextWeek(9, self.nextWeekEndDate)
         
-        out.write(self.formatWeek(9, self.nextWeekStartDate, self.nextWeekEndDate) + "\n")
+        out.write(self.formatWeek(9) + "\n")
 
         self.doNextWeek(10, self.nextWeekEndDate)
         
-        out.write(self.formatWeek(10, self.nextWeekStartDate, self.nextWeekEndDate) + "\n")
+        out.write(self.formatWeek(10) + "\n")
 
         self.doNextWeek(11, self.nextWeekEndDate)
         
-        out.write(self.formatWeek(11, self.nextWeekStartDate, self.nextWeekEndDate) + "\n")
+        out.write(self.formatWeek(11) + "\n")
 
         self.doNextWeek(12, self.nextWeekEndDate)
         
-        out.write(self.formatWeek(12, self.nextWeekStartDate, self.nextWeekEndDate))
+        out.write(self.formatWeek(12))

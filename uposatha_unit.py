@@ -22,7 +22,7 @@ class UposathaTest(unittest.TestCase):
         weekNum = 1
         expected = "Week 01: 2011-07-16 TO 2011-07-23"
         
-        actual = uposathaInstance.formatWeek(weekNum, None, None)
+        actual = uposathaInstance.formatWeek(weekNum)
         self.assertMultiLineEqual(expected, actual)
 
     def testDoNextWeek(self):
