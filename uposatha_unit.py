@@ -35,14 +35,14 @@ class UposathaTest(unittest.TestCase):
 
         self.assertTrue(filecmp.cmp(self.originalScript_good, self.originalScript_out))
 
-    def testCalcWeekDates(self):
+    def testNextWeek(self):
         lastWeekEndDate = datetime.date(2011, 07, 15)
         expectedStartDate = datetime.date(2011, 07, 16)
         expectedEndDate = datetime.date(2011, 07, 23)
         
         uposathaInstance = uposatha.Uposatha()
         uposathaInstance.setOutput(self.calcWeekDates_out)
-        uposathaInstance.calcWeekDates()
+        uposathaInstance.nextWeek()
         self.assertEquals(uposathaInstance.nextWeekStartDate, expectedStartDate) 
         self.assertEquals(uposathaInstance.nextWeekEndDate, expectedEndDate)
         

@@ -5,11 +5,11 @@ class Uposatha:
     rainsWeeks = [8,7, 8,7, 7,7, 8,7, 8,7, 8,7, 7,7, 8,7]
     weekNum = 0 # Current week index
     
-    nextWeekStartDate = None # initialised by calcWeekDates
+    nextWeekStartDate = None # initialised by nextWeek()
     nextWeekEndDate = datetime.date(2011, 07, 15) # Uposatha prior to season
 
     out = None
-    
+
     # Must be called before originalScript
     def setOutput(self, fileName):
         self.out = open(fileName, 'w')
@@ -19,15 +19,11 @@ class Uposatha:
         return "Week %02d: %s TO %s" % (self.weekNum,
                                         self.nextWeekStartDate.isoformat(),
                                         self.nextWeekEndDate.isoformat())
-
-    # Calculate the beginning and end of the next week
-    def calcWeekDates(self):
+        
+    def nextWeek(self):
         lastWeekEndDate = self.nextWeekEndDate
         self.nextWeekStartDate = lastWeekEndDate + timedelta(1)
         self.nextWeekEndDate   = lastWeekEndDate + timedelta(self.rainsWeeks[self.weekNum])
-
-    def nextWeek(self):
-        self.calcWeekDates()
         self.weekNum = self.weekNum + 1
 
     # The original script, now being refactored
@@ -39,3 +35,12 @@ class Uposatha:
         self.nextWeek()
         self.out.write(self.formatWeek()) # Last line has no line feed
         self.out.close()
+
+class UposathaWriter:
+    # A simple formatting method
+    def formatWeek(self, weekNum, startDate, endDate):
+        return "Week %02d: %s TO %s" % (self.weekNum,
+                                        startDate.isoformat(),
+                                        endDate.isoformat())
+
+    
