@@ -18,15 +18,13 @@ class Uposatha:
     def calcWeekDates(self, weekNum, lastWeekEndDate):
         self.nextWeekStartDate = lastWeekEndDate + timedelta(1)
         self.nextWeekEndDate   = lastWeekEndDate + timedelta(self.rainsWeeks[weekNum - 1])
-    
+
     # The original script, now being refactored
     def originalScript(self, outputFile):  
-        dayBeforeRains = datetime.date(2011, 07, 15) # Uposatha prior to first day of rains,
-                                                     # after uposatha
-
+        
         out = open(outputFile, 'w')
         
-        self.calcWeekDates(1, dayBeforeRains)
+        self.calcWeekDates(1, self.lastWeekEndDate)
 
         out.write(self.formatWeek(1) + "\n")
 
