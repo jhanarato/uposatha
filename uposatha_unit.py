@@ -42,7 +42,7 @@ class UposathaTest(unittest.TestCase):
         
         uposathaInstance = uposatha.Uposatha()
         uposathaInstance.setOutput(self.calcWeekDates_out)
-        uposathaInstance.calcWeekDates(1, lastWeekEndDate)
+        uposathaInstance.calcWeekDates(lastWeekEndDate)
         self.assertEquals(uposathaInstance.nextWeekStartDate, expectedStartDate) 
         self.assertEquals(uposathaInstance.nextWeekEndDate, expectedEndDate)
         
