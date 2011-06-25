@@ -30,28 +30,9 @@ class Uposatha:
         
     # The original script, now being refactored
     def originalScript(self):
-        self.nextWeek(1)
-        self.out.write("\n")
-        self.nextWeek(2)
-        self.out.write("\n")
-        self.nextWeek(3)
-        self.out.write("\n")
-        self.nextWeek(4)
-        self.out.write("\n")
-        self.nextWeek(5)
-        self.out.write("\n")
-        self.nextWeek(6)
-        self.out.write("\n")
-        self.nextWeek(7)
-        self.out.write("\n")
-        self.nextWeek(8)
-        self.out.write("\n")
-        self.nextWeek(9)
-        self.out.write("\n")
-        self.nextWeek(10)
-        self.out.write("\n")
-        self.nextWeek(11)
-        self.out.write("\n")
-        self.nextWeek(12)
+        for weekNum in range(1, 12):
+            self.nextWeek(weekNum)
+            self.out.write("\n")
+
+        self.nextWeek(weekNum + 1) # Last line has no line feed
         self.out.close()
-        
