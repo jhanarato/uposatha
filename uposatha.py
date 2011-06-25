@@ -3,7 +3,8 @@ from datetime import date, timedelta
 
 class Uposatha:
     rainsWeeks = [8,7, 8,7, 7,7, 8,7, 8,7, 8,7, 7,7, 8,7]
-
+    weekNum = 1 # Current week index
+    
     nextWeekStartDate = None # initialised by calcWeekDates
     nextWeekEndDate = datetime.date(2011, 07, 15) # Uposatha prior to season
 
@@ -24,15 +25,16 @@ class Uposatha:
         self.nextWeekStartDate = lastWeekEndDate + timedelta(1)
         self.nextWeekEndDate   = lastWeekEndDate + timedelta(self.rainsWeeks[weekNum - 1])
 
-    def nextWeek(self, weekNum):
-        self.calcWeekDates(weekNum, self.nextWeekEndDate)
-        self.out.write(self.formatWeek(weekNum))
+    def nextWeek(self):
+        self.calcWeekDates(self.weekNum, self.nextWeekEndDate)
+        self.out.write(self.formatWeek(self.weekNum))
+        self.weekNum = self.weekNum + 1
         
     # The original script, now being refactored
     def originalScript(self):
-        for weekNum in range(1, 12):
-            self.nextWeek(weekNum)
+        for foo in range(1, 12):
+            self.nextWeek()
             self.out.write("\n")
 
-        self.nextWeek(weekNum + 1) # Last line has no line feed
+        self.nextWeek() # Last line has no line feed
         self.out.close()
