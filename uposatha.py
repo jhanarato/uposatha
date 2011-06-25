@@ -29,36 +29,25 @@ class Uposatha:
         
         self.nextWeek(out, 1)
         out.write("\n")
+        self.nextWeek(out, 2)
+        out.write("\n")
+        self.nextWeek(out, 3)
+        out.write("\n")
+        self.nextWeek(out, 4)
+        out.write("\n")
+        self.nextWeek(out, 5)
+        out.write("\n")
+        self.nextWeek(out, 6)
+        out.write("\n")
+        self.nextWeek(out, 7)
+        out.write("\n")
+        self.nextWeek(out, 8)
+        out.write("\n")
+        self.nextWeek(out, 9)
+        out.write("\n")
+        self.nextWeek(out, 10)
+        out.write("\n")
+        self.nextWeek(out, 11)
+        out.write("\n")
+        self.nextWeek(out, 12)
         
-        self.calcWeekDates(2, self.nextWeekEndDate)
-        out.write(self.formatWeek(2) + "\n")
-        
-        self.calcWeekDates(3, self.nextWeekEndDate)      
-        out.write(self.formatWeek(3) + "\n")
-
-        self.calcWeekDates(4, self.nextWeekEndDate)
-        out.write(self.formatWeek(4) + "\n")
-
-        self.calcWeekDates(5, self.nextWeekEndDate)
-        out.write(self.formatWeek(5) + "\n")
-
-        self.calcWeekDates(6, self.nextWeekEndDate)
-        out.write(self.formatWeek(6) + "\n")
-
-        self.calcWeekDates(7, self.nextWeekEndDate)
-        out.write(self.formatWeek(7) + "\n")
-
-        self.calcWeekDates(8, self.nextWeekEndDate)
-        out.write(self.formatWeek(8) + "\n")
-
-        self.calcWeekDates(9, self.nextWeekEndDate)
-        out.write(self.formatWeek(9) + "\n")
-
-        self.calcWeekDates(10, self.nextWeekEndDate)
-        out.write(self.formatWeek(10) + "\n")
-
-        self.calcWeekDates(11, self.nextWeekEndDate)
-        out.write(self.formatWeek(11) + "\n")
-
-        self.calcWeekDates(12, self.nextWeekEndDate)
-        out.write(self.formatWeek(12))
