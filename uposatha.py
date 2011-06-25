@@ -21,12 +21,13 @@ class Uposatha:
                                         self.nextWeekEndDate.isoformat())
 
     # Calculate the beginning and end of the next week
-    def calcWeekDates(self, lastWeekEndDate):
+    def calcWeekDates(self):
+        lastWeekEndDate = self.nextWeekEndDate
         self.nextWeekStartDate = lastWeekEndDate + timedelta(1)
         self.nextWeekEndDate   = lastWeekEndDate + timedelta(self.rainsWeeks[self.weekNum])
 
     def nextWeek(self):
-        self.calcWeekDates(self.nextWeekEndDate)
+        self.calcWeekDates()
         self.weekNum = self.weekNum + 1
 
     # The original script, now being refactored
