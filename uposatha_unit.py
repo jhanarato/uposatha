@@ -25,13 +25,13 @@ class UposathaTest(unittest.TestCase):
         actual = uposathaInstance.formatWeek(weekNum)
         self.assertMultiLineEqual(expected, actual)
 
-    def testDoNextWeek(self):
+    def testcalcWeekDates(self):
         lastWeekEndDate = datetime.date(2011, 07, 15)
         expectedStartDate = datetime.date(2011, 07, 16)
         expectedEndDate = datetime.date(2011, 07, 23)
         
         uposathaInstance = uposatha.Uposatha()
-        uposathaInstance.doNextWeek(1, lastWeekEndDate)
+        uposathaInstance.calcWeekDates(1, lastWeekEndDate)
         self.assertEquals(uposathaInstance.nextWeekStartDate, expectedStartDate) 
         self.assertEquals(uposathaInstance.nextWeekEndDate, expectedEndDate) 
         
