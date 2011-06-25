@@ -12,6 +12,7 @@ class UposathaTest(unittest.TestCase):
     unit_out = "unit_out/test_output.txt"
     
     def setUp(self):
+        i = 1
         if os.path.exists(self.unit_out):
             os.remove(self.unit_out)
 
@@ -31,14 +32,15 @@ class UposathaTest(unittest.TestCase):
         expectedEndDate = datetime.date(2011, 07, 23)
         
         uposathaInstance = uposatha.Uposatha()
+        uposathaInstance.setOutput(self.unit_out)
         uposathaInstance.calcWeekDates(1, lastWeekEndDate)
         self.assertEquals(uposathaInstance.nextWeekStartDate, expectedStartDate) 
         self.assertEquals(uposathaInstance.nextWeekEndDate, expectedEndDate) 
         
     def testOriginalScript(self):
-        
         uposathaInstance = uposatha.Uposatha()
-        uposathaInstance.originalScript(self.unit_out)
+        uposathaInstance.setOutput(self.unit_out)
+        uposathaInstance.originalScript()
 
         self.assertTrue(filecmp.cmp(self.unit_good, self.unit_out))
 
