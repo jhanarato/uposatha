@@ -20,7 +20,7 @@ class Uposatha:
         self.nextWeekEndDate = lastWeekEndDate + timedelta(self.rainsWeeks[self.weekNum])
         self.weekNum += 1
     
-    def originalScript(self):
+    def calendar(self):
         for week in range(1, 12):
             self.nextWeek()
             print(self.formatWeek() + "\n")
@@ -37,4 +37,4 @@ class UposathaWriter:
 
 # Main
 u = Uposatha("out.txt")
-u.originalScript()
+u.calendar()
