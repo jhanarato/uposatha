@@ -8,10 +8,10 @@ class Uposatha:
         self.nextWeekEndDate = date(2011, 07, 15) # Uposatha prior to season
     
     def formatWeek(self):
-        return "Week %02d: %s TO %s" % (
-            self.weekNum,
-            self.nextWeekStartDate.isoformat(),
-            self.nextWeekEndDate.isoformat()
+        return "Week {no:02d}: {start} -> {end}".format(
+            no=self.weekNum,
+            start=self.nextWeekStartDate.isoformat(),
+            end=self.nextWeekEndDate.isoformat()
         )
     
     def nextWeek(self):
@@ -29,10 +29,10 @@ class Uposatha:
 
 class UposathaWriter:
     def formatWeek(self, weekNum, startDate, endDate):
-        return "Week %02d: %s TO %s" % (
-            self.weekNum,
-            startDate.isoformat(),
-            endDate.isoformat()
+        return "Week {no:02d}: {start} -> {end}".format(
+            no=self.weekNum,
+            start=self.nextWeekStartDate.isoformat(),
+            end=self.nextWeekEndDate.isoformat()
         )
 
 # Main
