@@ -28,25 +28,29 @@ class Uposatha:
         * four columns of 8, 10, 2 and 10 chars
         * the center() string pads out those columns with desired character
         """
-        print("\n{:^8} {:^10} {:2} {:^10}".format("Week", "Start", "", "End"))
-        print("{:^8} {:^10} {:2} {:^10}".format(
-            "".center(8, "-"),
-            "".center(10, "-"),
-            "",
-            "".center(10, "-"),
-        ))
+        self._getRow("Week", "Start", "", "End")
+        self._getSeparator("=")
         
         for i in range(1, 12):
             self._advance()
-            print(self._getWeek())
+            self._getWeek()
         self._advance()
-        print(self._getWeek()) # Last line has no line feed
+        self._getWeek() # Last line has no line feed
+    
+    def _getRow(self, col1, col2, transition, col3):
+        """Print the data for a row with all the widths and separators"""
+        print("{:^8} {:^10} {: ^2} {:^10}".format(col1, col2, transition, col3))
+
+    def _getSeparator(self, char):
+        """Print separator row with specified character"""
+        print("{1:{0}^8} {1:{0}^10} {1: ^2} {1:{0}^10}".format(char, ""))
     
     def _getWeek(self):
-        return "Week {no:02d}: {start} -> {end}".format(
-            no=self.weekNo,
-            start=self.nextA.isoformat(),
-            end=self.nextB.isoformat()
+        self._getRow(
+            "Week {:02d}:".format(self.weekNo),
+            self.nextA.isoformat(),
+            "->",
+            self.nextB.isoformat()
         )
     
     def _advance(self):
