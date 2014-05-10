@@ -8,12 +8,8 @@ class Uposatha:
     nextWeekStartDate = None # initialised by nextWeek()
     nextWeekEndDate = datetime.date(2011, 07, 15) # Uposatha prior to season
 
-    out = None
+    self.out = open(fileName, 'w')
 
-    # Must be called before originalScript
-    def setOutput(self, fileName):
-        self.out = open(fileName, 'w')
-        
     # A simple formatting method
     def formatWeek(self):
         return "Week %02d: %s TO %s" % (self.weekNum,
@@ -43,4 +39,7 @@ class UposathaWriter:
                                         startDate.isoformat(),
                                         endDate.isoformat())
 
-    
+# Main
+u = Uposatha()
+u.setOutput("out.txt")
+u.originalScript()
