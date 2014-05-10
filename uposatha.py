@@ -1,46 +1,89 @@
-import datetime
-from datetime import date, timedelta
+#!/usr/bin/env python3
+
+import argparse
+from datetime import date, datetime, timedelta
 
 class Uposatha:
-    rainsWeeks = [8,7, 8,7, 7,7, 8,7, 8,7, 8,7, 7,7, 8,7]
-    weekNum = 0 # Current week index
-    
-    nextWeekStartDate = None # initialised by nextWeek()
-    nextWeekEndDate = datetime.date(2011, 07, 15) # Uposatha prior to season
-
-    out = None
-
-    # Must be called before originalScript
-    def setOutput(self, fileName):
-        self.out = open(fileName, 'w')
+    def __init__(self, prevUpo):
+        """
+        Constructor
         
-    # A simple formatting method
-    def formatWeek(self):
-        return "Week %02d: %s TO %s" % (self.weekNum,
-                                        self.nextWeekStartDate.isoformat(),
-                                        self.nextWeekEndDate.isoformat())
+        prevUpo: the Uposatha prior to season. Begins as yyyy/mm/dd str,
+        converted to date.
         
-    def nextWeek(self):
-        lastWeekEndDate = self.nextWeekEndDate
-        self.nextWeekStartDate = lastWeekEndDate + timedelta(1)
-        self.nextWeekEndDate   = lastWeekEndDate + timedelta(self.rainsWeeks[self.weekNum])
-        self.weekNum = self.weekNum + 1
-
-    # The original script, now being refactored
-    def originalScript(self):
-        for week in range(1, 12):
-            self.nextWeek()
-            self.out.write(self.formatWeek() + "\n")
-
-        self.nextWeek()
-        self.out.write(self.formatWeek()) # Last line has no line feed
-        self.out.close()
-
-class UposathaWriter:
-    # A simple formatting method
-    def formatWeek(self, weekNum, startDate, endDate):
-        return "Week %02d: %s TO %s" % (self.weekNum,
-                                        startDate.isoformat(),
-                                        endDate.isoformat())
-
+        nextA, nextB = start/end days of next week
+        lastB = end day of last week
+        """
+        self.rains = [8,7, 8,7, 7,7, 8,7, 8,7, 8,7, 7,7, 8,7]
+        self.weekNo = 0 # Current week index
+        
+        self.nextB = datetime.strptime(prevUpo, "%Y/%m/%d").date()
+        self.nextA = None # initialised by advance()
     
+    def calendar(self):
+        """Print starting and ending date for week ending in Uposatha"""
+        
+        """
+        Print headers for table
+        * three columns of 8, 10, and 10 chars
+        * the center() string pads out those columns with desired character
+        """
+        self._getEdge()
+        self._getRow("Week", "Start", "End")
+        self._getSeparator("=")
+        
+        for i in range(1, 12):
+            self._advance()
+            self._getWeek()
+        self._advance()
+        self._getWeek() # Last line has no line feed
+        self._getEdge()
+    
+    def _getRow(self, col1="", col2="", col3="", page="|", fill=" ", corner="|", cornerSpace=" "):
+        """
+        Print the data for a row with all the widths and separators
+        The output is now an ASCII table
+        """
+        spec = "{c:{cs}<2}{c1:{f}^4}{p:{f}^3}{c2:{f}^10}{p:{f}^3}{c3:{f}^10}{c:{cs}>2}"
+        print(spec.format(
+            c1=col1,
+            c2=col2,
+            c3=col3,
+            f=fill,
+            p=page,
+            c=corner,
+            cs=cornerSpace
+        ))
+
+    def _getSeparator(self, char):
+        """Print separator row with specified character"""
+        self._getRow(page="+", fill="-", corner="+", cornerSpace="-")
+        
+    def _getEdge(self):
+        """Print table edges"""
+        self._getRow(page="+", fill="-", corner="+", cornerSpace="-")
+    
+    def _getWeek(self):
+        self._getRow(
+            "{: >2d}".format(self.weekNo),
+            self.nextA.isoformat(),
+            self.nextB.isoformat()
+        )
+    
+    def _advance(self):
+        lastB = self.nextB
+        # next week's start is the day after last week's end
+        self.nextA = lastB + timedelta(1)
+        # next week's end depends on the pattern of days in self.rains
+        self.nextB = lastB + timedelta(self.rains[self.weekNo])
+        self.weekNo += 1
+
+if __name__ == "__main__":
+    """Command-line arguments"""
+    arg = argparse.ArgumentParser()
+    arg.add_argument("prevUpo", help="yyyy/mm/dd of Uposatha prior to season, E.g. 2011/07/15, 2014/07/11")
+    args = arg.parse_args()
+
+    """Make Uposatha calendar"""
+    u = Uposatha(args.prevUpo)
+    u.calendar()
