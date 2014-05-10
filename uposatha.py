@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 from datetime import date, datetime, timedelta
 
 class Uposatha:
@@ -21,6 +22,20 @@ class Uposatha:
     
     def calendar(self):
         """Print starting and ending date for week ending in Uposatha"""
+        
+        """
+        Print headers for table
+        * four columns of 8, 10, 2 and 10 chars
+        * the center() string pads out those columns with desired character
+        """
+        print("\n{:^8} {:^10} {:2} {:^10}".format("Week", "Start", "", "End"))
+        print("{:^8} {:^10} {:2} {:^10}".format(
+            "".center(8, "-"),
+            "".center(10, "-"),
+            "",
+            "".center(10, "-"),
+        ))
+        
         for i in range(1, 12):
             self._advance()
             print(self._getWeek())
@@ -43,5 +58,11 @@ class Uposatha:
         self.weekNo += 1
 
 if __name__ == "__main__":
-    u = Uposatha("2014/7/11")
+    """Command-line arguments"""
+    arg = argparse.ArgumentParser()
+    arg.add_argument("prevUpo", help="yyyy/mm/dd of Uposatha prior to season, E.g. 2011/07/15, 2014/07/11")
+    args = arg.parse_args()
+
+    """Make Uposatha calendar"""
+    u = Uposatha(args.prevUpo)
     u.calendar()
