@@ -40,8 +40,11 @@ class Uposatha:
         self._getEdge()
     
     def _getRow(self, col1="", col2="", col3="", page="|", fill=" ", corner="|", cornerSpace=" "):
-        """Print the data for a row with all the widths and separators"""
-        spec = "{c:{cs}<2}{c1:{f}^7}{p:{f}^3}{c2:{f}^10}{p:{f}^3}{c3:{f}^10}{c:{cs}>2}"
+        """
+        Print the data for a row with all the widths and separators
+        The output is now an ASCII table
+        """
+        spec = "{c:{cs}<2}{c1:{f}^4}{p:{f}^3}{c2:{f}^10}{p:{f}^3}{c3:{f}^10}{c:{cs}>2}"
         print(spec.format(
             c1=col1,
             c2=col2,
@@ -62,7 +65,7 @@ class Uposatha:
     
     def _getWeek(self):
         self._getRow(
-            "Week {:02d}".format(self.weekNo),
+            "{: >2d}".format(self.weekNo),
             self.nextA.isoformat(),
             self.nextB.isoformat()
         )
