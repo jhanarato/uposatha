@@ -25,10 +25,10 @@ class Uposatha:
         
         """
         Print headers for table
-        * four columns of 8, 10, 2 and 10 chars
+        * three columns of 8, 10, and 10 chars
         * the center() string pads out those columns with desired character
         """
-        self._getRow("Week", "Start", "", "End")
+        self._getRow("Week", "Start", "End")
         self._getSeparator("=")
         
         for i in range(1, 12):
@@ -37,19 +37,18 @@ class Uposatha:
         self._advance()
         self._getWeek() # Last line has no line feed
     
-    def _getRow(self, col1, col2, transition, col3):
+    def _getRow(self, col1, col2, col3):
         """Print the data for a row with all the widths and separators"""
-        print("{:^8} {:^10} {: ^2} {:^10}".format(col1, col2, transition, col3))
+        print("{:^8} {:^10} {:^10}".format(col1, col2, col3))
 
     def _getSeparator(self, char):
         """Print separator row with specified character"""
-        print("{1:{0}^8} {1:{0}^10} {1: ^2} {1:{0}^10}".format(char, ""))
+        print("{1:{0}^8} {1:{0}^10} {1:{0}^10}".format(char, ""))
     
     def _getWeek(self):
         self._getRow(
             "Week {:02d}:".format(self.weekNo),
             self.nextA.isoformat(),
-            "->",
             self.nextB.isoformat()
         )
     
