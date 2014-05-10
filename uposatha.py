@@ -28,7 +28,8 @@ class Uposatha:
         * three columns of 8, 10, and 10 chars
         * the center() string pads out those columns with desired character
         """
-        self._getRow("Week", "Start", "End", page="")
+        self._getEdge()
+        self._getRow("Week", "Start", "End")
         self._getSeparator("=")
         
         for i in range(1, 12):
@@ -36,21 +37,28 @@ class Uposatha:
             self._getWeek()
         self._advance()
         self._getWeek() # Last line has no line feed
+        self._getEdge()
     
-    def _getRow(self, col1="", col2="", col3="", page="|", fill=" "):
+    def _getRow(self, col1="", col2="", col3="", page="|", fill=" ", corner="|", cornerSpace=" "):
         """Print the data for a row with all the widths and separators"""
-        spec = "{c1:{f}^7}{p:{f}^3}{c2:{f}^10}{p:{f}^3}{c3:{f}^10}"
+        spec = "{c:{cs}<2}{c1:{f}^7}{p:{f}^3}{c2:{f}^10}{p:{f}^3}{c3:{f}^10}{c:{cs}>2}"
         print(spec.format(
             c1=col1,
             c2=col2,
             c3=col3,
             f=fill,
-            p=page
+            p=page,
+            c=corner,
+            cs=cornerSpace
         ))
 
     def _getSeparator(self, char):
         """Print separator row with specified character"""
-        self._getRow(page="+", fill="-")
+        self._getRow(page="+", fill="-", corner="+", cornerSpace="-")
+        
+    def _getEdge(self):
+        """Print table edges"""
+        self._getRow(page="+", fill="-", corner="+", cornerSpace="-")
     
     def _getWeek(self):
         self._getRow(
