@@ -1,39 +1,33 @@
+#!/usr/bin/env python3
+
 from datetime import date, timedelta
 
 class Uposatha:
     def __init__(self, filename):
         self.rainsWeeks = [8,7, 8,7, 7,7, 8,7, 8,7, 8,7, 7,7, 8,7]
-        self.weekNum = 0 # Current week index
-        self.nextWeekStartDate = None # initialised by nextWeek()
-        self.nextWeekEndDate = date(2011, 07, 15) # Uposatha prior to season
+        self.weekNo = 0 # Current week index
+        self.nextA = None # initialised by advance()
+        self.nextB = date(2011, 07, 15) # Uposatha prior to season
     
-    def formatWeek(self):
+    def getWeek(self):
         return "Week {no:02d}: {start} -> {end}".format(
-            no=self.weekNum,
-            start=self.nextWeekStartDate.isoformat(),
-            end=self.nextWeekEndDate.isoformat()
+            no=self.weekNo,
+            start=self.nextA.isoformat(),
+            end=self.nextB.isoformat()
         )
     
-    def nextWeek(self):
-        lastWeekEndDate = self.nextWeekEndDate
-        self.nextWeekStartDate = lastWeekEndDate + timedelta(1)
-        self.nextWeekEndDate = lastWeekEndDate + timedelta(self.rainsWeeks[self.weekNum])
-        self.weekNum += 1
+    def advance(self):
+        lastB = self.nextB
+        self.nextA = lastB + timedelta(1)
+        self.nextB = lastB + timedelta(self.rainsWeeks[self.weekNo])
+        self.weekNo += 1
     
     def calendar(self):
-        for week in range(1, 12):
-            self.nextWeek()
-            print(self.formatWeek() + "\n")
-        self.nextWeek()
-        print(self.formatWeek()) # Last line has no line feed
-
-class UposathaWriter:
-    def formatWeek(self, weekNum, startDate, endDate):
-        return "Week {no:02d}: {start} -> {end}".format(
-            no=self.weekNum,
-            start=self.nextWeekStartDate.isoformat(),
-            end=self.nextWeekEndDate.isoformat()
-        )
+        for i in range(1, 12):
+            self.advance()
+            print(self.getWeek())
+        self.advance()
+        print(self.getWeek()) # Last line has no line feed
 
 # Main
 u = Uposatha("out.txt")
