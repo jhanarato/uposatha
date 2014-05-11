@@ -23,11 +23,7 @@ class Uposatha:
     def calendar(self):
         """Print starting and ending date for week ending in Uposatha"""
         
-        """
-        Print headers for table
-        * three columns of 8, 10, and 10 chars
-        * the center() string pads out those columns with desired character
-        """
+        # Print headers for table
         self._getEdge()
         self._getRow("Week", "Start", "End")
         self._getSeparator("=")
@@ -44,7 +40,7 @@ class Uposatha:
         Print the data for a row with all the widths and separators
         The output is now an ASCII table
         """
-        spec = "{c:{cs}<2}{c1:{f}^4}{p:{f}^3}{c2:{f}^10}{p:{f}^3}{c3:{f}^10}{c:{cs}>2}"
+        spec = "{c:{cs}<2}{c1:{f}^4}{p:{f}^3}{c2:{f}^10}{p:{f}^3}{c3:{f}^10}{c:{cs}>2}" # Abandon all hope
         print(spec.format(
             c1=col1,
             c2=col2,
