@@ -1,0 +1,1 @@
+# The model of the calendar presented to the user
