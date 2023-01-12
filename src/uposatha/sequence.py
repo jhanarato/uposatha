@@ -1,3 +1,5 @@
+from uposatha.configure import SeasonNames
+
 class UposathaSequence:
     def __init__(self):
         self.add_month = False
@@ -23,5 +25,11 @@ class UposathaSequence:
         positions = range(self.positions)
         return [self._duration_at_position(position) for position in positions]
 
-def get_sequence(year, season):
-    pass
+def get_sequence(long_years, extra_days_years, year, season):
+    sequence = UposathaSequence()
+    if year in long_years and season == SeasonNames.HOT:
+        sequence.add_month = True
+    if year in extra_days_years and season == SeasonNames.HOT:
+        sequence.add_day = True
+
+    return sequence.days

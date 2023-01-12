@@ -18,5 +18,7 @@ def test_add_day(extra_day_sequence):
 def test_get_sequence(normal_sequence):
     normal_year = 2011
     season_name = SeasonNames.COLD
-    sequence = get_sequence(normal_year, season_name)
+    long_years = [2010]
+    extra_day_years = [2012]
+    sequence = get_sequence(long_years, extra_day_years, normal_year, season_name)
     assert sequence == normal_sequence
