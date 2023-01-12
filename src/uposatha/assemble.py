@@ -1,4 +1,8 @@
-from uposatha.sequence import UposathaSequence
+from typing import List
 
-def uposatha_dates():
-    pass
+from uposatha.seasons import Season
+from uposatha.configure import Configuration
+
+
+def get_seasons(config: Configuration) -> List[Season]:
+    return [Season()]

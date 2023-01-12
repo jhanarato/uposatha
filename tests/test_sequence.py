@@ -1,5 +1,6 @@
 from uposatha.sequence import UposathaSequence, get_sequence
-from uposatha.configure import SeasonNames
+from uposatha.seasons import SeasonNames
+
 
 def test_uposatha_sequence(normal_sequence):
     seq = UposathaSequence()

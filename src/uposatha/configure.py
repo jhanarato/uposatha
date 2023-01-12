@@ -1,13 +1,8 @@
-# Configure the calendar model.
 from dataclasses import dataclass
-from enum import Enum, auto
 import datetime
 from typing import List
 
-class SeasonNames(Enum):
-    COLD = "Cold"
-    HOT = "Hot"
-    RAINY = "Rainy"
+from uposatha.seasons import SeasonNames
 
 @dataclass(frozen=True)
 class Configuration:
@@ -18,7 +13,7 @@ class Configuration:
     hot_season_years: List[int]
     extra_day_years: List[int]
 
-def get_default_configuration():
+def get_default_configuration() -> Configuration:
     return Configuration(
         start_date=datetime.date(2010, 2, 28),
         start_season=SeasonNames.HOT,

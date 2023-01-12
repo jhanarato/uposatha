@@ -1,4 +1,5 @@
-from uposatha.configure import SeasonNames
+from uposatha.seasons import SeasonNames
+
 
 class UposathaSequence:
     def __init__(self):
