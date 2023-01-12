@@ -3,7 +3,7 @@ class UposathaSequence:
         self.add_month = False
         self.add_day = False
         self.positions = 8
-        self.fourteen_days = [3, 7]
+        self.fourteen_days = [2, 6]
         self.extra_day_position = 6
 
     def _duration_at_position(self, position):
@@ -18,7 +18,7 @@ class UposathaSequence:
             self.positions += 2
 
         if self.add_day:
-            self.fourteen_days.remove(7)
+            self.fourteen_days.remove(6)
 
-        positions = range(1, self.positions + 1)
+        positions = range(self.positions)
         return [self._duration_at_position(position) for position in positions]
