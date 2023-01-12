@@ -1,15 +1,22 @@
-from uposatha.assemble import UposathaSequence
+from uposatha.sequence import UposathaSequence, get_sequence
+from uposatha.configure import SeasonNames
 
-def test_uposatha_sequence():
+def test_uposatha_sequence(normal_sequence):
     seq = UposathaSequence()
-    assert seq.days == [15, 15, 14, 15, 15, 15, 14, 15]
+    assert seq.days == normal_sequence
 
-def test_add_month():
+def test_add_month(long_hot_season_sequence):
     seq = UposathaSequence()
     seq.add_month = True
-    assert seq.days == [15, 15, 14, 15, 15, 15, 14, 15, 15, 15]
+    assert seq.days == long_hot_season_sequence
 
-def test_add_day():
+def test_add_day(extra_day_sequence):
     seq = UposathaSequence()
     seq.add_day = True
-    assert seq.days == [15, 15, 14, 15, 15, 15, 15, 15]
+    assert seq.days == extra_day_sequence
+
+def test_get_sequence(normal_sequence):
+    normal_year = 2011
+    season_name = SeasonNames.COLD
+    sequence = get_sequence(normal_year, season_name)
+    assert sequence == normal_sequence

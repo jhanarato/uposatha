@@ -22,3 +22,6 @@ class UposathaSequence:
 
         positions = range(self.positions)
         return [self._duration_at_position(position) for position in positions]
+
+def get_sequence(year, season):
+    pass
