@@ -2,7 +2,8 @@ from dataclasses import dataclass
 import datetime
 from typing import List
 
-from uposatha.seasons import SeasonNames
+from uposatha.elements import SeasonNames
+
 
 @dataclass(frozen=True)
 class Configuration:
