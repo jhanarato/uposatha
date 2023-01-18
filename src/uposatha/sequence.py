@@ -13,14 +13,6 @@ days_between_half_moons = {
     SeasonType.EXTRA_DAY: [8, 15, 15, 14, 15, 15, 15, 15]
 }
 
-normal_uposatha_sequence = [15, 15, 14, 15, 15, 15, 14, 15]
-extra_month_uposatha_sequence = [15, 15, 14, 15, 15, 15, 14, 15, 15, 15]
-extra_day_uposatha_sequence = [15, 15, 14, 15, 15, 15, 15, 15]
-
-normal_half_moon_sequence = [8, 15, 15, 14, 15, 15, 15, 14]
-extra_month_half_moon_sequence = [8, 15, 15, 14, 15, 15, 15, 14, 15, 15]
-extra_day_half_moon_sequence = [8, 15, 15, 14, 15, 15, 15, 15]
-
 class SequenceSelector:
     def __init__(self, extra_month_years: List[int], extra_day_years: List[int]) -> None:
         self._extra_month_years = extra_month_years
