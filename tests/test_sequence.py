@@ -23,3 +23,6 @@ def test_normal_uposatha(selector, normal_uposatha_sequence, season_name, year):
 
 def test_extra_month_uposatha(selector, extra_month_uposatha_sequence):
     assert selector.uposathas(SeasonNames.HOT, 2010) == extra_month_uposatha_sequence
+
+def test_extra_day_uposatha(selector, extra_day_uposatha_sequence):
+    assert selector.uposathas(SeasonNames.HOT, 2016) == extra_day_uposatha_sequence
