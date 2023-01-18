@@ -18,5 +18,8 @@ def selector():
         (SeasonNames.HOT, 2011)
     ]
 )
-def test_normal_year(selector, normal_uposatha_sequence, season_name, year):
+def test_normal_uposatha(selector, normal_uposatha_sequence, season_name, year):
     assert selector.uposathas(season_name, year) == normal_uposatha_sequence
+
+def test_extra_month_uposatha(selector, extra_month_uposatha_sequence):
+    assert selector.uposathas(SeasonNames.HOT, 2010) == extra_month_uposatha_sequence
