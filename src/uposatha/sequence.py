@@ -31,13 +31,8 @@ class SequenceSelector:
         return days_between_uposathas[season_type]
 
     def half_moons(self, season_name: SeasonName, begins_in_year: int) -> List[int]:
-        if self._season_type(season_name, begins_in_year) == SeasonType.EXTRA_MONTH:
-            return extra_month_half_moon_sequence
-
-        if self._season_type(season_name, begins_in_year) == SeasonType.EXTRA_DAY:
-            return extra_day_half_moon_sequence
-
-        return normal_half_moon_sequence
+        season_type = self._season_type(season_name, begins_in_year)
+        return days_between_half_moons[season_type]
 
     def _season_type(self, season_name: SeasonName, begins_in_year: int) -> SeasonType:
         if season_name == SeasonName.HOT:
