@@ -15,25 +15,25 @@ class SequenceSelector:
         self._extra_day_years = extra_day_years
 
     def uposathas(self, season_name: SeasonNames, begins_in_year: int) -> List[int]:
-        if self._is_extra_month(begins_in_year, season_name):
+        if self._is_extra_month(season_name, begins_in_year):
             return extra_month_uposatha_sequence
 
-        if self._is_extra_day(begins_in_year, season_name):
+        if self._is_extra_day(season_name, begins_in_year):
             return extra_day_uposatha_sequence
 
         return normal_uposatha_sequence
 
     def half_moons(self, season_name: SeasonNames, begins_in_year: int) -> List[int]:
-        if self._is_extra_month(begins_in_year, season_name):
+        if self._is_extra_month(season_name, begins_in_year):
             return extra_month_half_moon_sequence
 
-        if self._is_extra_day(begins_in_year, season_name):
+        if self._is_extra_day(season_name, begins_in_year):
             return extra_day_half_moon_sequence
 
         return normal_half_moon_sequence
 
-    def _is_extra_month(self, begins_in_year, season_name):
+    def _is_extra_month(self, season_name: SeasonNames, begins_in_year: int) -> bool:
         return season_name == SeasonNames.HOT and begins_in_year in self._extra_month_years
 
-    def _is_extra_day(self, begins_in_year, season_name):
+    def _is_extra_day(self, season_name: SeasonNames, begins_in_year: int) -> bool:
         return season_name == SeasonNames.HOT and begins_in_year in self._extra_day_years
