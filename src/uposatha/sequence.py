@@ -1,16 +1,16 @@
-from typing import List
+from typing import List, Tuple
 from uposatha.elements import SeasonName, SeasonType
 
 days_between_uposathas = {
-    SeasonType.NORMAL: [15, 15, 14, 15, 15, 15, 14, 15],
-    SeasonType.EXTRA_MONTH: [15, 15, 14, 15, 15, 15, 14, 15, 15, 15],
-    SeasonType.EXTRA_DAY: [15, 15, 14, 15, 15, 15, 15, 15]
+    SeasonType.NORMAL: (15, 15, 14, 15, 15, 15, 14, 15),
+    SeasonType.EXTRA_MONTH: (15, 15, 14, 15, 15, 15, 14, 15, 15, 15),
+    SeasonType.EXTRA_DAY: (15, 15, 14, 15, 15, 15, 15, 15)
 }
 
 days_between_half_moons = {
-    SeasonType.NORMAL: [8, 15, 15, 14, 15, 15, 15, 14],
-    SeasonType.EXTRA_MONTH: [8, 15, 15, 14, 15, 15, 15, 14, 15, 15],
-    SeasonType.EXTRA_DAY: [8, 15, 15, 14, 15, 15, 15, 15]
+    SeasonType.NORMAL: (8, 15, 15, 14, 15, 15, 15, 14),
+    SeasonType.EXTRA_MONTH: (8, 15, 15, 14, 15, 15, 15, 14, 15, 15),
+    SeasonType.EXTRA_DAY: (8, 15, 15, 14, 15, 15, 15, 15)
 }
 
 class SequenceSelector:
@@ -18,11 +18,11 @@ class SequenceSelector:
         self._extra_month_years = extra_month_years
         self._extra_day_years = extra_day_years
 
-    def uposathas(self, season_name: SeasonName, begins_in_year: int) -> List[int]:
+    def uposathas(self, season_name: SeasonName, begins_in_year: int) -> Tuple[int, ...]:
         season_type = self._season_type(season_name, begins_in_year)
         return days_between_uposathas[season_type]
 
-    def half_moons(self, season_name: SeasonName, begins_in_year: int) -> List[int]:
+    def half_moons(self, season_name: SeasonName, begins_in_year: int) -> Tuple[int, ...]:
         season_type = self._season_type(season_name, begins_in_year)
         return days_between_half_moons[season_type]
 
