@@ -1,25 +1,22 @@
-from uposatha.sequence import UposathaSequence, get_sequence
-from uposatha.seasons import SeasonNames
+import pytest
 
+from uposatha.sequence import SequenceSelector
+from uposatha.elements import SeasonNames
 
-def test_uposatha_sequence(normal_sequence):
-    seq = UposathaSequence()
-    assert seq.days == normal_sequence
+@pytest.fixture
+def selector():
+    return SequenceSelector(
+        extra_month_years=[2010, 2012, 2015, 2018, 2021, 2023, 2026, 2029],
+        extra_day_years=[2016, 2020, 2025, 2030]
+    )
 
-def test_add_month(long_hot_season_sequence):
-    seq = UposathaSequence()
-    seq.add_month = True
-    assert seq.days == long_hot_season_sequence
-
-def test_add_day(extra_day_sequence):
-    seq = UposathaSequence()
-    seq.add_day = True
-    assert seq.days == extra_day_sequence
-
-def test_get_sequence(normal_sequence):
-    normal_year = 2011
-    season_name = SeasonNames.COLD
-    long_years = [2010]
-    extra_day_years = [2012]
-    sequence = get_sequence(long_years, extra_day_years, normal_year, season_name)
-    assert sequence == normal_sequence
+@pytest.mark.parametrize(
+    "season_name,year",
+    [
+        (SeasonNames.COLD, 2011),
+        (SeasonNames.RAINY, 2011),
+        (SeasonNames.HOT, 2011)
+    ]
+)
+def test_normal_year(selector, normal_uposatha_sequence, season_name, year):
+    assert selector.uposathas(season_name, year) == normal_uposatha_sequence
