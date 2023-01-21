@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from enum import Enum, auto
 
 class SeasonName(Enum):
@@ -9,3 +10,7 @@ class SeasonType(Enum):
     NORMAL = "Normal"
     EXTRA_MONTH = "Extra Month"
     EXTRA_DAY = "Extra Day"
+
+@dataclass
+class Season:
+    pass
