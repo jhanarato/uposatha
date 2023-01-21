@@ -1,5 +1,5 @@
 from typing import Tuple
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum, auto
 from datetime import date
 
@@ -27,3 +27,8 @@ class Uposatha:
 class Season:
     name: SeasonName
     uposathas: Tuple[Uposatha, ...]
+    first_day: date
+    last_day: date = field(init=False)
+
+    def __post_init__(self):
+        self.last_day = self.uposathas[-1].falls_on

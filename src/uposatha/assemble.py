@@ -13,6 +13,7 @@ def create_season(config: Configuration, day_before: date, season_name: SeasonNa
     selector = SequenceSelector(config.extra_month_years, config.extra_day_years)
     return Season(
         name=season_name,
+        first_day=day_before + timedelta(1),
         uposathas=uposathas_in_season(selector, day_before, season_name)
     )
 
