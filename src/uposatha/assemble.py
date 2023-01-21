@@ -1,5 +1,7 @@
 from typing import List, Tuple
 from datetime import date, timedelta
+from itertools import accumulate
+
 from uposatha.configure import Configuration
 from uposatha.elements import Season, SeasonName, Uposatha
 from uposatha.sequence import SequenceSelector
@@ -17,23 +19,5 @@ def uposathas_in_season(selector: SequenceSelector,
                         day_before: date,
                         season_name: SeasonName) -> Tuple[Uposatha, ...]:
     sequence = selector.uposathas(season_name, day_before.year)
-    deltas = [timedelta(days) for days in sequence]
-
-    uposathas = create_uposatha(day_before, deltas)
-
-    return tuple(uposathas)
-
-
-def create_uposatha(day_before, deltas):
-    uposathas = []
-    next_date = day_before
-    for delta in deltas:
-        next_date = next_date + delta
-
-        uposathas.append(
-            Uposatha(
-                falls_on=next_date
-            )
-        )
-    return uposathas
-
+    dates = [day_before + timedelta(days) for days in accumulate(sequence)]
+    return tuple(Uposatha(falls_on=date_) for date_ in dates)
