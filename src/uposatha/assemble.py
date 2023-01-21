@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from itertools import accumulate
 
 from uposatha.configure import Configuration
-from uposatha.elements import Season, SeasonName, Uposatha
+from uposatha.elements import Season, SeasonName, Uposatha, OfTheDay
 from uposatha.sequence import SequenceSelector
 
 def get_seasons(config: Configuration) -> List[Season]:
@@ -21,11 +21,20 @@ def uposathas_in_season(selector: SequenceSelector,
     sequence = selector.uposathas(season_name, day_before.year)
 
     uposathas = []
-    for position, days in enumerate(accumulate(sequence)):
+    delta = timedelta(0)
+    for position, days in enumerate(sequence):
+        if days == 14:
+            of_the_day = OfTheDay.FOURTEEN
+        else:
+            of_the_day = OfTheDay.FIFTEEN
+
+        delta += timedelta(days)
+
         uposathas.append(
             Uposatha(
-                falls_on=day_before + timedelta(days),
-                number_in_season=position + 1
+                falls_on=day_before + delta,
+                number_in_season=position + 1,
+                of_the_day=of_the_day
             )
         )
     return tuple(uposathas)

@@ -2,6 +2,7 @@ from datetime import date
 
 import pytest
 
+from uposatha.elements import OfTheDay
 from uposatha.configure import get_default_configuration
 from uposatha.assemble import create_season
 
@@ -22,3 +23,6 @@ def test_last_uposatha_date(first_season):
 def test_uposatha_number_in_season(first_season):
     assert first_season.uposathas[0].number_in_season == 1
     assert first_season.uposathas[-1].number_in_season == 10
+
+def test_fourteen_day(first_season):
+    assert first_season.uposathas[2].of_the_day == OfTheDay.FOURTEEN

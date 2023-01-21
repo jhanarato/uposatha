@@ -13,10 +13,15 @@ class SeasonType(Enum):
     EXTRA_MONTH = "Extra Month"
     EXTRA_DAY = "Extra Day"
 
+class OfTheDay(Enum):
+    FOURTEEN = 14,
+    FIFTEEN = 15
+
 @dataclass
 class Uposatha:
     falls_on: date
     number_in_season: int
+    of_the_day: OfTheDay
 
 @dataclass
 class Season:
