@@ -19,6 +19,12 @@ def uposathas_in_season(selector: SequenceSelector,
     sequence = selector.uposathas(season_name, day_before.year)
     deltas = [timedelta(days) for days in sequence]
 
+    uposathas = create_uposatha(day_before, deltas)
+
+    return tuple(uposathas)
+
+
+def create_uposatha(day_before, deltas):
     uposathas = []
     next_date = day_before
     for delta in deltas:
@@ -29,6 +35,5 @@ def uposathas_in_season(selector: SequenceSelector,
                 falls_on=next_date
             )
         )
-
-    return tuple(uposathas)
+    return uposathas
 
