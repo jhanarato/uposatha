@@ -1,5 +1,7 @@
+from typing import Tuple
 from dataclasses import dataclass
 from enum import Enum, auto
+from datetime import date
 
 class SeasonName(Enum):
     COLD = "Cold"
@@ -12,5 +14,9 @@ class SeasonType(Enum):
     EXTRA_DAY = "Extra Day"
 
 @dataclass
+class Uposatha:
+    falls_on: date
+
+@dataclass
 class Season:
-    pass
+    uposathas: Tuple[Uposatha, ...]
