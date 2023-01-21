@@ -16,6 +16,7 @@ class SeasonType(Enum):
 @dataclass
 class Uposatha:
     falls_on: date
+    number_in_season: int
 
 @dataclass
 class Season:

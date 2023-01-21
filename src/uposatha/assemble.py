@@ -19,5 +19,13 @@ def uposathas_in_season(selector: SequenceSelector,
                         day_before: date,
                         season_name: SeasonName) -> Tuple[Uposatha, ...]:
     sequence = selector.uposathas(season_name, day_before.year)
-    dates = [day_before + timedelta(days) for days in accumulate(sequence)]
-    return tuple(Uposatha(falls_on=date_) for date_ in dates)
+
+    uposathas = []
+    for position, days in enumerate(accumulate(sequence)):
+        uposathas.append(
+            Uposatha(
+                falls_on=day_before + timedelta(days),
+                number_in_season=position + 1
+            )
+        )
+    return tuple(uposathas)
