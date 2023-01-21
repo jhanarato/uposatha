@@ -25,4 +25,5 @@ class Uposatha:
 
 @dataclass
 class Season:
+    name: SeasonName
     uposathas: Tuple[Uposatha, ...]
