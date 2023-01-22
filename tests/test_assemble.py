@@ -43,3 +43,14 @@ def test_uposatha_moon_phase(first_season):
     expected = [MoonPhase.NEW, MoonPhase.FULL] * 5
     actual = [uposatha.moon_phase for uposatha in first_season.uposathas]
     assert actual == expected
+
+def test_first_half_moon_date(first_season):
+    assert first_season.half_moons[0].falls_on == date(2010, 3, 8)
+
+def test_last_half_moon_date(first_season):
+    assert first_season.half_moons[-1].falls_on == date(2010, 7, 19)
+
+def test_half_moon_phase(first_season):
+    expected = [MoonPhase.WANING, MoonPhase.WAXING] * 5
+    actual = [half_moon.moon_phase for half_moon in first_season.half_moons]
+    assert actual == expected

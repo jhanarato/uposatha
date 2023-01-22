@@ -27,8 +27,14 @@ class Uposatha:
     moon_phase: MoonPhase
 
 @dataclass(frozen=True)
+class HalfMoon:
+    falls_on: date
+    moon_phase: MoonPhase
+
+@dataclass(frozen=True)
 class Season:
     name: SeasonName
     uposathas: Tuple[Uposatha, ...]
+    half_moons: Tuple[HalfMoon, ...]
     first_day: date
     last_day: date
