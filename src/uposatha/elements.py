@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Literal, Tuple
 from dataclasses import dataclass, field
 from enum import Enum, auto
 from datetime import date
@@ -21,7 +21,7 @@ class OfTheDay(Enum):
 class Uposatha:
     falls_on: date
     number_in_season: int
-    of_the_day: OfTheDay
+    days_since_previous: int
 
 @dataclass(frozen=True)
 class Season:

@@ -30,18 +30,13 @@ def uposathas_in_season(selector: SequenceSelector,
     uposathas = []
     delta = timedelta(0)
     for position, days in enumerate(sequence):
-        if days == 14:
-            of_the_day = OfTheDay.FOURTEEN
-        else:
-            of_the_day = OfTheDay.FIFTEEN
-
         delta += timedelta(days)
 
         uposathas.append(
             Uposatha(
                 falls_on=day_before + delta,
                 number_in_season=position + 1,
-                of_the_day=of_the_day
+                days_since_previous=days
             )
         )
     return tuple(uposathas)
