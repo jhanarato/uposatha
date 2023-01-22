@@ -11,10 +11,15 @@ def get_seasons(config: Configuration) -> List[Season]:
 
 def create_season(config: Configuration, day_before: date, season_name: SeasonName) -> Season:
     selector = SequenceSelector(config.extra_month_years, config.extra_day_years)
+    uposathas = uposathas_in_season(selector, day_before, season_name)
+    first_day = day_before + timedelta(1)
+    last_day = uposathas[-1].falls_on
+
     return Season(
         name=season_name,
-        first_day=day_before + timedelta(1),
-        uposathas=uposathas_in_season(selector, day_before, season_name)
+        first_day=first_day,
+        last_day=last_day,
+        uposathas=uposathas
     )
 
 def uposathas_in_season(selector: SequenceSelector,

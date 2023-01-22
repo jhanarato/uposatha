@@ -35,3 +35,6 @@ def test_first_day_of_season(first_season):
 
 def test_last_day_of_season(first_season):
     assert first_season.last_day == date(2010, 7, 26)
+
+def test_uposatha_moon_phases(first_season):
+    assert 0

@@ -17,18 +17,15 @@ class OfTheDay(Enum):
     FOURTEEN = 14,
     FIFTEEN = 15
 
-@dataclass
+@dataclass(frozen=True)
 class Uposatha:
     falls_on: date
     number_in_season: int
     of_the_day: OfTheDay
 
-@dataclass
+@dataclass(frozen=True)
 class Season:
     name: SeasonName
     uposathas: Tuple[Uposatha, ...]
     first_day: date
-    last_day: date = field(init=False)
-
-    def __post_init__(self):
-        self.last_day = self.uposathas[-1].falls_on
+    last_day: date
