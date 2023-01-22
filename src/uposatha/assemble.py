@@ -1,9 +1,9 @@
 from typing import List, Tuple
 from datetime import date, timedelta
-from itertools import accumulate
+from itertools import cycle
 
 from uposatha.configure import Configuration
-from uposatha.elements import Season, SeasonName, Uposatha, OfTheDay
+from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase
 from uposatha.sequence import SequenceSelector
 
 def get_seasons(config: Configuration) -> List[Season]:
@@ -26,9 +26,10 @@ def uposathas_in_season(selector: SequenceSelector,
                         day_before: date,
                         season_name: SeasonName) -> Tuple[Uposatha, ...]:
     sequence = selector.uposathas(season_name, day_before.year)
-
-    uposathas = []
+    phases = cycle([MoonPhase.NEW, MoonPhase.FULL])
     delta = timedelta(0)
+    uposathas = []
+
     for position, days in enumerate(sequence):
         delta += timedelta(days)
 
@@ -36,7 +37,8 @@ def uposathas_in_season(selector: SequenceSelector,
             Uposatha(
                 falls_on=day_before + delta,
                 number_in_season=position + 1,
-                days_since_previous=days
+                days_since_previous=days,
+                moon_phase = next(phases)
             )
         )
     return tuple(uposathas)

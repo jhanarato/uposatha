@@ -2,7 +2,7 @@ from datetime import date
 
 import pytest
 
-from uposatha.elements import SeasonName, OfTheDay
+from uposatha.elements import SeasonName, MoonPhase
 from uposatha.configure import get_default_configuration
 from uposatha.assemble import create_season
 
@@ -38,3 +38,8 @@ def test_first_day_of_season(first_season):
 
 def test_last_day_of_season(first_season):
     assert first_season.last_day == date(2010, 7, 26)
+
+def test_uposatha_moon_phase(first_season):
+    expected = [MoonPhase.NEW, MoonPhase.FULL] * 5
+    actual = [uposatha.moon_phase for uposatha in first_season.uposathas]
+    assert actual == expected

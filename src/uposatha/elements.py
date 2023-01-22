@@ -13,11 +13,18 @@ class SeasonType(Enum):
     EXTRA_MONTH = "Extra Month"
     EXTRA_DAY = "Extra Day"
 
+class MoonPhase(Enum):
+    WANING = "Waning"
+    NEW = "New"
+    WAXING = "Waxing"
+    FULL = "Full"
+
 @dataclass(frozen=True)
 class Uposatha:
     falls_on: date
     number_in_season: int
     days_since_previous: int
+    moon_phase: MoonPhase
 
 @dataclass(frozen=True)
 class Season:
