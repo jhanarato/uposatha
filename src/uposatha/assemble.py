@@ -7,9 +7,11 @@ from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase, HalfMoon
 from uposatha.sequence import SequenceSelector
 
 def get_seasons(config: Configuration) -> List[Season]:
-    first = create_season(config, config.start_date, SeasonName.RAINY)
-    second = create_season(config, first.last_day, SeasonName.COLD)
-    third = create_season(config, second.last_day, SeasonName.HOT)
+    names = season_names(config.start_season)
+    first = create_season(config, config.start_date, next(names))
+
+    second = create_season(config, first.last_day, next(names))
+    third = create_season(config, second.last_day, next(names))
     return [first, second, third]
 
 def create_season(config: Configuration, day_before: date, season_name: SeasonName) -> Season:
@@ -34,6 +36,11 @@ def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
 
     while True:
         yield next(skipped_to_start)
+
+def is_last_season(config: Configuration, season: Season) -> bool:
+    is_end_year = config.end_year == season.last_day.year
+    is_end_season = config.end_season == season.name
+    return is_end_season and is_end_year
 
 def uposathas_in_season(selector: SequenceSelector,
                         day_before: date,

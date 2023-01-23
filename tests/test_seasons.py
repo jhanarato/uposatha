@@ -2,10 +2,9 @@ from datetime import date
 
 import pytest
 
-from uposatha.assemble import get_seasons
 from uposatha.configure import Configuration
-
-from uposatha.elements import SeasonName
+from uposatha.assemble import get_seasons, is_last_season
+from uposatha.elements import Season, SeasonName
 
 
 def test_three_seasons(three_seasons):
@@ -62,3 +61,23 @@ def test_three_seasons_last_day(three_seasons, index, last_day):
 )
 def test_three_seasons_name(three_seasons, index, season_name):
     assert three_seasons[index].name == season_name
+
+def test_is_last_season():
+    config = Configuration(
+        start_date=date(1977, 1, 1),
+        start_season=SeasonName.RAINY,
+        end_season=SeasonName.HOT,
+        end_year=2012,
+        extra_month_years=[],
+        extra_day_years=[]
+    )
+
+    season = Season(
+        name=SeasonName.HOT,
+        first_day=date(2012, 3, 1),
+        last_day=date(2012, 7, 1),
+        uposathas=(),
+        half_moons=()
+    )
+
+    assert is_last_season(config, season)
