@@ -1,6 +1,6 @@
-from typing import List, Tuple
+from typing import List, Tuple, Generator
 from datetime import date, timedelta
-from itertools import cycle
+from itertools import cycle, dropwhile
 
 from uposatha.configure import Configuration
 from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase, HalfMoon
@@ -24,8 +24,15 @@ def create_season(config: Configuration, day_before: date, season_name: SeasonNa
         first_day=first_day,
         last_day=last_day,
         uposathas=uposathas,
-        half_moons=half_moons_in_season(selector, day_before, season_name)
+        half_moons=half_moons
     )
+
+def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
+    name_cycle = cycle([SeasonName.RAINY, SeasonName.COLD, SeasonName.HOT])
+    skipped_to_start = dropwhile(lambda name: name != start_name, name_cycle)
+
+    while True:
+        yield next(skipped_to_start)
 
 def uposathas_in_season(selector: SequenceSelector,
                         day_before: date,

@@ -4,7 +4,7 @@ import pytest
 
 from uposatha.elements import SeasonName, MoonPhase
 from uposatha.configure import get_default_configuration
-from uposatha.assemble import create_season
+from uposatha.assemble import create_season, season_names
 
 
 @pytest.fixture
@@ -55,3 +55,16 @@ def test_half_moon_phase(first_season):
     expected = [MoonPhase.WANING, MoonPhase.WAXING] * 5
     actual = [half_moon.moon_phase for half_moon in first_season.half_moons]
     assert actual == expected
+
+@pytest.mark.parametrize(
+    "start_name,next_name",
+    [
+        (SeasonName.RAINY, SeasonName.COLD),
+        (SeasonName.COLD, SeasonName.HOT),
+        (SeasonName.HOT, SeasonName.RAINY)
+    ]
+)
+def test_season_name_generator(start_name, next_name):
+    name_generator = season_names(start_name)
+    assert next(name_generator) == start_name
+    assert next(name_generator) == next_name
