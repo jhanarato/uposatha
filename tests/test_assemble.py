@@ -6,6 +6,7 @@ from uposatha.elements import SeasonName, MoonPhase
 from uposatha.configure import get_default_configuration
 from uposatha.assemble import create_season
 
+
 @pytest.fixture
 def first_season():
     config = get_default_configuration()
