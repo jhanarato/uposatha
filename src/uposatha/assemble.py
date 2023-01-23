@@ -8,11 +8,15 @@ from uposatha.sequence import SequenceSelector
 
 def get_seasons(config: Configuration) -> List[Season]:
     names = season_names(config.start_season)
-    first = create_season(config, config.start_date, next(names))
+    season = create_season(config, config.start_date, next(names))
 
-    second = create_season(config, first.last_day, next(names))
-    third = create_season(config, second.last_day, next(names))
-    return [first, second, third]
+    seasons = [season]
+
+    while not is_last_season(config, season):
+        season = create_season(config, season.last_day, next(names))
+        seasons.append(season)
+
+    return seasons
 
 def create_season(config: Configuration, day_before: date, season_name: SeasonName) -> Season:
     selector = SequenceSelector(config.extra_month_years, config.extra_day_years)
