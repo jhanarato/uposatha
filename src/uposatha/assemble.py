@@ -28,8 +28,9 @@ def create_season(config: Configuration, day_before: date, season_name: SeasonNa
     )
 
 def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
-    name_cycle = cycle([SeasonName.RAINY, SeasonName.COLD, SeasonName.HOT])
-    skipped_to_start = dropwhile(lambda name: name != start_name, name_cycle)
+    names_in_order = [SeasonName.RAINY, SeasonName.COLD, SeasonName.HOT]
+    names_looped = cycle(names_in_order)
+    skipped_to_start = dropwhile(lambda name: name != start_name, names_looped)
 
     while True:
         yield next(skipped_to_start)
