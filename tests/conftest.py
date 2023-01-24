@@ -33,4 +33,4 @@ def extra_day_half_moon_sequence():
 @pytest.fixture
 def rainy_season():
     config = get_default_configuration()
-    return create_season(config, date(2010, 2, 28), SeasonName.RAINY)
+    return create_season(config, date(2010, 7, 26), SeasonName.RAINY)
