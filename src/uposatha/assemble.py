@@ -20,21 +20,20 @@ def get_seasons(config: Configuration) -> List[Season]:
     return seasons
 
 def create_season(config: Configuration, day_before: date, season_name: SeasonName) -> Season:
-    year = day_before.year
-    season_type = get_season_type(config.extra_month_years, config.extra_day_years, season_name, year)
+    season_type = get_season_type(config.extra_month_years, config.extra_day_years, season_name, day_before.year)
+
     uposatha_sequence = days_between_uposathas[season_type]
     half_moon_sequence = days_between_half_moons[season_type]
+
     uposathas = uposathas_in_season(uposatha_sequence, day_before)
     half_moons = half_moons_in_season(half_moon_sequence, day_before)
-    first_day = day_before + timedelta(1)
-    last_day = uposathas[-1].falls_on
     holidays = holidays_in_season(season_name, uposathas)
 
     return Season(
         name=season_name,
         type=season_type,
-        first_day=first_day,
-        last_day=last_day,
+        first_day=day_before + timedelta(1),
+        last_day=uposathas[-1].falls_on,
         uposathas=uposathas,
         half_moons=half_moons,
         holidays=holidays
@@ -92,7 +91,6 @@ def is_last_season(config: Configuration, season: Season) -> bool:
     is_end_year = config.end_year == season.last_day.year
     is_end_season = config.end_season == season.name
     return is_end_season and is_end_year
-
 
 def get_season_type(extra_month_years: List[int], extra_day_years: List[int],
                     season_name: SeasonName, begins_in_year: int) -> SeasonType:
