@@ -48,3 +48,14 @@ class Season:
     holidays: Tuple[Holiday, ...]
     first_day: date
     last_day: date
+
+days_between_uposathas = {
+    SeasonType.NORMAL: (15, 15, 14, 15, 15, 15, 14, 15),
+    SeasonType.EXTRA_MONTH: (15, 15, 14, 15, 15, 15, 14, 15, 15, 15),
+    SeasonType.EXTRA_DAY: (15, 15, 14, 15, 15, 15, 15, 15)
+}
+days_between_half_moons = {
+    SeasonType.NORMAL: (8, 15, 15, 14, 15, 15, 15, 14),
+    SeasonType.EXTRA_MONTH: (8, 15, 15, 14, 15, 15, 15, 14, 15, 15),
+    SeasonType.EXTRA_DAY: (8, 15, 15, 14, 15, 15, 15, 15)
+}

@@ -35,19 +35,6 @@ def create_season(config: Configuration, day_before: date, season_name: SeasonNa
         holidays=holidays
     )
 
-def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
-    names_in_order = [SeasonName.RAINY, SeasonName.COLD, SeasonName.HOT]
-    names_looped = cycle(names_in_order)
-    skipped_to_start = dropwhile(lambda name: name != start_name, names_looped)
-
-    while True:
-        yield next(skipped_to_start)
-
-def is_last_season(config: Configuration, season: Season) -> bool:
-    is_end_year = config.end_year == season.last_day.year
-    is_end_season = config.end_season == season.name
-    return is_end_season and is_end_year
-
 def uposathas_in_season(selector: SequenceSelector,
                         day_before: date,
                         season_name: SeasonName) -> Tuple[Uposatha, ...]:
@@ -91,3 +78,16 @@ def half_moons_in_season(selector: SequenceSelector,
 
 def holidays_in_season(season: SeasonName, uposathas: Tuple[Uposatha, ...]) -> Tuple[Holiday]:
     return Holiday(name=HolidayName.PAVARANA),
+
+def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
+    names_in_order = [SeasonName.RAINY, SeasonName.COLD, SeasonName.HOT]
+    names_looped = cycle(names_in_order)
+    skipped_to_start = dropwhile(lambda name: name != start_name, names_looped)
+
+    while True:
+        yield next(skipped_to_start)
+
+def is_last_season(config: Configuration, season: Season) -> bool:
+    is_end_year = config.end_year == season.last_day.year
+    is_end_season = config.end_season == season.name
+    return is_end_season and is_end_year
