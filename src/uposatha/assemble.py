@@ -1,6 +1,7 @@
 from typing import List, Tuple, Generator
 from datetime import date, timedelta
 from itertools import cycle, dropwhile
+from dataclasses import dataclass
 
 from uposatha.configure import Configuration
 from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase, HalfMoon, Holiday, HolidayName, SeasonType
@@ -76,9 +77,23 @@ def half_moons_in_season(sequence: Tuple[int, ...],
 
     return tuple(half_moons)
 
+@dataclass(frozen=True)
+class HolidayLocation:
+    name: HolidayName
+    season: SeasonName
+    normal_position: int
+    extra_month_position: int
+
 def holidays_in_season(season_name: SeasonName,
                        season_type: SeasonType,
                        uposathas: Tuple[Uposatha, ...]) -> Tuple[Holiday]:
+    pavarana = HolidayLocation(
+        name=HolidayName.PAVARANA,
+        season=SeasonName.RAINY,
+        normal_position=6,
+        extra_month_position=6
+    )
+
     return Holiday(name=HolidayName.PAVARANA),
 
 def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
