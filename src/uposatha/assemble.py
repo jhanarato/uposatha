@@ -27,7 +27,7 @@ def create_season(config: Configuration, day_before: date, season_name: SeasonNa
 
     uposathas = uposathas_in_season(uposatha_sequence, day_before)
     half_moons = half_moons_in_season(half_moon_sequence, day_before)
-    holidays = holidays_in_season(season_name, uposathas)
+    holidays = holidays_in_season(season_name, season_type, uposathas)
 
     return Season(
         name=season_name,
@@ -76,7 +76,9 @@ def half_moons_in_season(sequence: Tuple[int, ...],
 
     return tuple(half_moons)
 
-def holidays_in_season(season: SeasonName, uposathas: Tuple[Uposatha, ...]) -> Tuple[Holiday]:
+def holidays_in_season(season_name: SeasonName,
+                       season_type: SeasonType,
+                       uposathas: Tuple[Uposatha, ...]) -> Tuple[Holiday]:
     return Holiday(name=HolidayName.PAVARANA),
 
 def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
