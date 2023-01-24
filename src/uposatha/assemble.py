@@ -3,8 +3,9 @@ from datetime import date, timedelta
 from itertools import cycle, dropwhile
 
 from uposatha.configure import Configuration
-from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase, HalfMoon, Holiday, HolidayName, days_between_uposathas, days_between_half_moons
-from uposatha.sequence import SequenceSelector, get_season_type
+from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase, HalfMoon, Holiday, HolidayName, SeasonType
+from uposatha.elements import days_between_uposathas, days_between_half_moons
+
 
 def get_seasons(config: Configuration) -> List[Season]:
     names = season_names(config.start_season)
@@ -91,3 +92,13 @@ def is_last_season(config: Configuration, season: Season) -> bool:
     is_end_year = config.end_year == season.last_day.year
     is_end_season = config.end_season == season.name
     return is_end_season and is_end_year
+
+
+def get_season_type(extra_month_years: List[int], extra_day_years: List[int],
+                    season_name: SeasonName, begins_in_year: int) -> SeasonType:
+    if season_name == SeasonName.HOT:
+        if begins_in_year in extra_month_years:
+            return SeasonType.EXTRA_MONTH
+        if begins_in_year in extra_day_years:
+            return SeasonType.EXTRA_DAY
+    return SeasonType.NORMAL
