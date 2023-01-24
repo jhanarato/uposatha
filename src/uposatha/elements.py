@@ -43,6 +43,7 @@ class Holiday:
 @dataclass(frozen=True)
 class Season:
     name: SeasonName
+    type: SeasonType
     uposathas: Tuple[Uposatha, ...]
     half_moons: Tuple[HalfMoon, ...]
     holidays: Tuple[Holiday, ...]

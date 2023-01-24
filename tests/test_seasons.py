@@ -4,7 +4,7 @@ import pytest
 
 from uposatha.configure import Configuration
 from uposatha.assemble import get_seasons, is_last_season
-from uposatha.elements import Season, SeasonName
+from uposatha.elements import Season, SeasonName, SeasonType
 
 
 def test_three_seasons(three_seasons):
@@ -74,6 +74,7 @@ def test_is_last_season():
 
     season = Season(
         name=SeasonName.HOT,
+        type=SeasonType.EXTRA_MONTH,
         first_day=date(2012, 3, 1),
         last_day=date(2012, 7, 1),
         uposathas=(),

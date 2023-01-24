@@ -3,8 +3,8 @@ from datetime import date, timedelta
 from itertools import cycle, dropwhile
 
 from uposatha.configure import Configuration
-from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase, HalfMoon, Holiday, HolidayName
-from uposatha.sequence import SequenceSelector
+from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase, HalfMoon, Holiday, HolidayName, days_between_uposathas, days_between_half_moons
+from uposatha.sequence import SequenceSelector, get_season_type
 
 def get_seasons(config: Configuration) -> List[Season]:
     names = season_names(config.start_season)
@@ -19,15 +19,19 @@ def get_seasons(config: Configuration) -> List[Season]:
     return seasons
 
 def create_season(config: Configuration, day_before: date, season_name: SeasonName) -> Season:
-    selector = SequenceSelector(config.extra_month_years, config.extra_day_years)
-    uposathas = uposathas_in_season(selector, day_before, season_name)
-    half_moons = half_moons_in_season(selector, day_before, season_name)
+    year = day_before.year
+    season_type = get_season_type(config.extra_month_years, config.extra_day_years, season_name, year)
+    uposatha_sequence = days_between_uposathas[season_type]
+    half_moon_sequence = days_between_half_moons[season_type]
+    uposathas = uposathas_in_season(uposatha_sequence, day_before)
+    half_moons = half_moons_in_season(half_moon_sequence, day_before)
     first_day = day_before + timedelta(1)
     last_day = uposathas[-1].falls_on
     holidays = holidays_in_season(season_name, uposathas)
 
     return Season(
         name=season_name,
+        type=season_type,
         first_day=first_day,
         last_day=last_day,
         uposathas=uposathas,
@@ -35,10 +39,8 @@ def create_season(config: Configuration, day_before: date, season_name: SeasonNa
         holidays=holidays
     )
 
-def uposathas_in_season(selector: SequenceSelector,
-                        day_before: date,
-                        season_name: SeasonName) -> Tuple[Uposatha, ...]:
-    sequence = selector.uposathas(season_name, day_before.year)
+def uposathas_in_season(sequence: Tuple[int, ...],
+                        day_before: date) -> Tuple[Uposatha, ...]:
     phases = cycle([MoonPhase.NEW, MoonPhase.FULL])
     delta = timedelta(0)
     uposathas = []
@@ -56,10 +58,8 @@ def uposathas_in_season(selector: SequenceSelector,
         )
     return tuple(uposathas)
 
-def half_moons_in_season(selector: SequenceSelector,
-                         day_before: date,
-                         season_name: SeasonName) -> Tuple[HalfMoon, ...]:
-    sequence = selector.half_moons(season_name, day_before.year)
+def half_moons_in_season(sequence: Tuple[int, ...],
+                         day_before: date) -> Tuple[HalfMoon, ...]:
     phases = cycle([MoonPhase.WANING, MoonPhase.WAXING])
     delta = timedelta(0)
     half_moons = []

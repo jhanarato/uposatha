@@ -8,12 +8,12 @@ class SequenceSelector:
         self._extra_day_years = extra_day_years
 
     def uposathas(self, season_name: SeasonName, begins_in_year: int) -> Tuple[int, ...]:
-        season_type = get_season_type(self._extra_month_years, self._extra_day_years, season_name, begins_in_year)
-        return days_between_uposathas[season_type]
+        s_type = get_season_type(self._extra_month_years, self._extra_day_years, season_name, begins_in_year)
+        return days_between_uposathas[s_type]
 
     def half_moons(self, season_name: SeasonName, begins_in_year: int) -> Tuple[int, ...]:
-        season_type = get_season_type(self._extra_month_years, self._extra_day_years, season_name, begins_in_year)
-        return days_between_half_moons[season_type]
+        s_type = get_season_type(self._extra_month_years, self._extra_day_years, season_name, begins_in_year)
+        return days_between_half_moons[s_type]
 
 def get_season_type(extra_month_years: List[int], extra_day_years: List[int],
                     season_name: SeasonName, begins_in_year: int) -> SeasonType:
