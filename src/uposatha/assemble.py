@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from itertools import cycle, dropwhile
 
 from uposatha.configure import Configuration
-from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase, HalfMoon
+from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase, HalfMoon, Holiday, HolidayName
 from uposatha.sequence import SequenceSelector
 
 def get_seasons(config: Configuration) -> List[Season]:
@@ -24,13 +24,15 @@ def create_season(config: Configuration, day_before: date, season_name: SeasonNa
     half_moons = half_moons_in_season(selector, day_before, season_name)
     first_day = day_before + timedelta(1)
     last_day = uposathas[-1].falls_on
+    holidays = holidays_in_season(season_name, uposathas)
 
     return Season(
         name=season_name,
         first_day=first_day,
         last_day=last_day,
         uposathas=uposathas,
-        half_moons=half_moons
+        half_moons=half_moons,
+        holidays=holidays
     )
 
 def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
@@ -86,3 +88,6 @@ def half_moons_in_season(selector: SequenceSelector,
         )
 
     return tuple(half_moons)
+
+def holidays_in_season(season: SeasonName, uposathas: Tuple[Uposatha, ...]) -> Tuple[Holiday]:
+    return Holiday(name=HolidayName.PAVARANA),

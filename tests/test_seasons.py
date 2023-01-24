@@ -77,7 +77,8 @@ def test_is_last_season():
         first_day=date(2012, 3, 1),
         last_day=date(2012, 7, 1),
         uposathas=(),
-        half_moons=()
+        half_moons=(),
+        holidays=()
     )
 
     assert is_last_season(config, season)

@@ -19,6 +19,9 @@ class MoonPhase(Enum):
     WAXING = "Waxing"
     FULL = "Full"
 
+class HolidayName(Enum):
+    PAVARANA = "Pavarana Day"
+
 @dataclass(frozen=True)
 class Uposatha:
     falls_on: date
@@ -32,9 +35,16 @@ class HalfMoon:
     moon_phase: MoonPhase
 
 @dataclass(frozen=True)
+class Holiday:
+    name: HolidayName
+    # falls_on: date
+    # uposatha: Uposatha
+
+@dataclass(frozen=True)
 class Season:
     name: SeasonName
     uposathas: Tuple[Uposatha, ...]
     half_moons: Tuple[HalfMoon, ...]
+    holidays: Tuple[Holiday, ...]
     first_day: date
     last_day: date
