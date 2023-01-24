@@ -40,8 +40,7 @@ def create_season(config: Configuration, day_before: date, season_name: SeasonNa
         holidays=holidays
     )
 
-def uposathas_in_season(sequence: Tuple[int, ...],
-                        day_before: date) -> Tuple[Uposatha, ...]:
+def uposathas_in_season(sequence: Tuple[int, ...], day_before: date) -> Tuple[Uposatha, ...]:
     phases = cycle([MoonPhase.NEW, MoonPhase.FULL])
     delta = timedelta(0)
     uposathas = []
@@ -59,8 +58,7 @@ def uposathas_in_season(sequence: Tuple[int, ...],
         )
     return tuple(uposathas)
 
-def half_moons_in_season(sequence: Tuple[int, ...],
-                         day_before: date) -> Tuple[HalfMoon, ...]:
+def half_moons_in_season(sequence: Tuple[int, ...], day_before: date) -> Tuple[HalfMoon, ...]:
     phases = cycle([MoonPhase.WANING, MoonPhase.WAXING])
     delta = timedelta(0)
     half_moons = []
