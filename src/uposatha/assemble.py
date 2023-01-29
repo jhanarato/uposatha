@@ -1,6 +1,6 @@
 from typing import List, Tuple, Generator
 from datetime import date, timedelta
-from itertools import cycle, dropwhile
+from itertools import cycle, dropwhile, accumulate, islice
 from dataclasses import dataclass
 
 from uposatha.configure import Configuration
@@ -40,19 +40,32 @@ def create_season(config: Configuration, day_before: date, season_name: SeasonNa
         holidays=holidays
     )
 
+def date_sequence(sequence: Tuple[int, ...], day_before: date) -> Tuple[date, ...]:
+    return tuple(day_before + timedelta(days) for days in accumulate(sequence))
+
+def position_sequence(length: int):
+    return tuple(range(1, length + 1))
+
+def phase_sequence(length: int, phases: List[MoonPhase]) -> Tuple[MoonPhase]:
+    p = phases
+    p = cycle(p)
+    p = islice(p, length)
+    return tuple(p)
+
 def uposathas_in_season(sequence: Tuple[int, ...], day_before: date) -> Tuple[Uposatha, ...]:
-    phases = cycle([MoonPhase.NEW, MoonPhase.FULL])
-    delta = timedelta(0)
+    dates = iter(date_sequence(sequence, day_before))
+    position = iter(position_sequence(len(sequence)))
+    days_since_previous = iter(sequence)
+    phases = iter(phase_sequence(len(sequence), [MoonPhase.NEW, MoonPhase.FULL]))
+
     uposathas = []
 
-    for position, days in enumerate(sequence):
-        delta += timedelta(days)
-
+    for days in sequence:
         uposathas.append(
             Uposatha(
-                falls_on=day_before + delta,
-                number_in_season=position + 1,
-                days_since_previous=days,
+                falls_on=next(dates),
+                number_in_season=next(position),
+                days_since_previous=next(days_since_previous),
                 moon_phase=next(phases)
             )
         )
