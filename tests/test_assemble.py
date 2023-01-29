@@ -4,7 +4,7 @@ import pytest
 
 from uposatha.elements import SeasonName, MoonPhase
 from uposatha.configure import get_default_configuration
-from uposatha.assemble import create_season, season_names, date_sequence
+from uposatha.assemble import create_season, season_names, seq_to_date
 
 
 @pytest.fixture
@@ -70,5 +70,5 @@ def test_season_name_generator(start_name, next_name):
     assert next(name_generator) == next_name
 
 def test_date_sequence():
-    seq = date_sequence((1, 2, 3), date(2000, 1, 1))
+    seq = seq_to_date((1, 2, 3), date(2000, 1, 1))
     assert seq == (date(2000, 1, 2), date(2000, 1, 4), date(2000, 1, 7))
