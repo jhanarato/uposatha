@@ -62,17 +62,31 @@ def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
     while True:
         yield next(skipped_to_start)
 
-def uposathas_in_season(sequence: Tuple[int, ...], day_before: date) -> Tuple[Uposatha, ...]:
-    falls_on = seq_to_date(sequence, day_before)
-    number_in_season = seq_to_position(len(sequence))
-    days_since_previous = sequence
-    moon_phase = phases(len(sequence), [MoonPhase.NEW, MoonPhase.FULL])
-    return tuple(map(Uposatha, falls_on, number_in_season, days_since_previous, moon_phase))
+def uposathas_in_season(sequence: Tuple[int, ...],
+                        day_before: date) -> Tuple[Uposatha, ...]:
+    return tuple(
+        map(Uposatha,
+            seq_to_date(sequence, day_before),
+            seq_to_position(len(sequence)),
+            sequence,
+            phases(
+                len(sequence),
+                [MoonPhase.NEW, MoonPhase.FULL]
+            )
+        )
+    )
 
-def half_moons_in_season(sequence: Tuple[int, ...], day_before: date) -> Tuple[HalfMoon, ...]:
-    falls_on = seq_to_date(sequence, day_before)
-    moon_phase = phases(len(sequence), [MoonPhase.WANING, MoonPhase.WAXING])
-    return tuple(map(HalfMoon, falls_on, moon_phase))
+def half_moons_in_season(sequence: Tuple[int, ...],
+                         day_before: date) -> Tuple[HalfMoon, ...]:
+    return tuple(
+        map(HalfMoon,
+            seq_to_date(sequence, day_before),
+            phases(
+                len(sequence),
+                [MoonPhase.WANING, MoonPhase.WAXING]
+            )
+        )
+    )
 
 def seq_to_date(sequence: Tuple[int, ...], day_before: date) -> Tuple[date, ...]:
     return tuple(day_before + timedelta(days) for days in accumulate(sequence))
