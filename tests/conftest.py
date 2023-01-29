@@ -5,6 +5,7 @@ import pytest
 from uposatha.elements import SeasonName
 from uposatha.assemble import create_season
 from uposatha.configure import get_default_configuration
+from uposatha.calendar import Calendar
 
 @pytest.fixture
 def normal_uposatha_sequence():
@@ -44,3 +45,8 @@ def rainy_season():
 def cold_season():
     config = get_default_configuration()
     return create_season(config, date(2010, 11, 18), SeasonName.COLD)
+
+@pytest.fixture
+def cold_before_extra_month_season():
+    calendar = Calendar()
+    return calendar.seasons[5]
