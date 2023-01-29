@@ -20,19 +20,24 @@ def get_seasons(config: Configuration) -> List[Season]:
 
     return seasons
 
-def create_season(config: Configuration, day_before: date, season_name: SeasonName) -> Season:
-    season_type = get_season_type(config.extra_month_years, config.extra_day_years, season_name, day_before.year)
+def is_last_season(config: Configuration, season: Season) -> bool:
+    is_end_year = config.end_year == season.last_day.year
+    is_end_season = config.end_season == season.name
+    return is_end_season and is_end_year
 
-    uposatha_sequence = days_between_uposathas[season_type]
-    half_moon_sequence = days_between_half_moons[season_type]
+def create_season(config: Configuration, day_before: date, season_name: SeasonName) -> Season:
+    type_ = season_type(config.extra_month_years, config.extra_day_years, season_name, day_before.year)
+
+    uposatha_sequence = days_between_uposathas[type_]
+    half_moon_sequence = days_between_half_moons[type_]
 
     uposathas = uposathas_in_season(uposatha_sequence, day_before)
     half_moons = half_moons_in_season(half_moon_sequence, day_before)
-    holidays = holidays_in_season(season_name, season_type, uposathas)
+    holidays = holidays_in_season(season_name, type_, uposathas)
 
     return Season(
         name=season_name,
-        type=season_type,
+        type=type_,
         first_day=day_before + timedelta(1),
         last_day=uposathas[-1].falls_on,
         uposathas=uposathas,
@@ -40,16 +45,22 @@ def create_season(config: Configuration, day_before: date, season_name: SeasonNa
         holidays=holidays
     )
 
-def seq_to_date(sequence: Tuple[int, ...], day_before: date) -> Tuple[date, ...]:
-    return tuple(day_before + timedelta(days) for days in accumulate(sequence))
+def season_type(extra_month_years: List[int], extra_day_years: List[int],
+                season_name: SeasonName, begins_in_year: int) -> SeasonType:
+    if season_name == SeasonName.HOT:
+        if begins_in_year in extra_month_years:
+            return SeasonType.EXTRA_MONTH
+        if begins_in_year in extra_day_years:
+            return SeasonType.EXTRA_DAY
+    return SeasonType.NORMAL
 
-def seq_to_position(length: int):
-    return tuple(range(1, length + 1))
+def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
+    names_in_order = [SeasonName.RAINY, SeasonName.COLD, SeasonName.HOT]
+    names_looped = cycle(names_in_order)
+    skipped_to_start = dropwhile(lambda name: name != start_name, names_looped)
 
-def phases(length: int, p: List[MoonPhase]) -> Tuple[MoonPhase]:
-    p = cycle(p)
-    p = islice(p, length)
-    return tuple(p)
+    while True:
+        yield next(skipped_to_start)
 
 def uposathas_in_season(sequence: Tuple[int, ...], day_before: date) -> Tuple[Uposatha, ...]:
     falls_on = seq_to_date(sequence, day_before)
@@ -63,6 +74,17 @@ def half_moons_in_season(sequence: Tuple[int, ...], day_before: date) -> Tuple[H
     moon_phase = phases(len(sequence), [MoonPhase.WANING, MoonPhase.WAXING])
     return tuple(map(HalfMoon, falls_on, moon_phase))
 
+def seq_to_date(sequence: Tuple[int, ...], day_before: date) -> Tuple[date, ...]:
+    return tuple(day_before + timedelta(days) for days in accumulate(sequence))
+
+def seq_to_position(length: int):
+    return tuple(range(1, length + 1))
+
+def phases(length: int, p: List[MoonPhase]) -> Tuple[MoonPhase]:
+    p = cycle(p)
+    p = islice(p, length)
+    return tuple(p)
+
 @dataclass(frozen=True)
 class HolidayLocation:
     name: HolidayName
@@ -71,7 +93,7 @@ class HolidayLocation:
     extra_month_position: int
 
 def holidays_in_season(season_name: SeasonName,
-                       season_type: SeasonType,
+                       season_type_: SeasonType,
                        uposathas: Tuple[Uposatha, ...]) -> Tuple[Holiday]:
     pavarana = HolidayLocation(
         name=HolidayName.PAVARANA,
@@ -81,25 +103,3 @@ def holidays_in_season(season_name: SeasonName,
     )
 
     return Holiday(name=HolidayName.PAVARANA),
-
-def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
-    names_in_order = [SeasonName.RAINY, SeasonName.COLD, SeasonName.HOT]
-    names_looped = cycle(names_in_order)
-    skipped_to_start = dropwhile(lambda name: name != start_name, names_looped)
-
-    while True:
-        yield next(skipped_to_start)
-
-def is_last_season(config: Configuration, season: Season) -> bool:
-    is_end_year = config.end_year == season.last_day.year
-    is_end_season = config.end_season == season.name
-    return is_end_season and is_end_year
-
-def get_season_type(extra_month_years: List[int], extra_day_years: List[int],
-                    season_name: SeasonName, begins_in_year: int) -> SeasonType:
-    if season_name == SeasonName.HOT:
-        if begins_in_year in extra_month_years:
-            return SeasonType.EXTRA_MONTH
-        if begins_in_year in extra_day_years:
-            return SeasonType.EXTRA_DAY
-    return SeasonType.NORMAL
