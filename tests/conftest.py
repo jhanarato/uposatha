@@ -31,6 +31,16 @@ def extra_day_half_moon_sequence():
     return 8, 15, 15, 14, 15, 15, 15, 15
 
 @pytest.fixture
+def long_hot_season():
+    config = get_default_configuration()
+    return create_season(config, date(2010, 2, 28), SeasonName.HOT)
+
+@pytest.fixture
 def rainy_season():
     config = get_default_configuration()
     return create_season(config, date(2010, 7, 26), SeasonName.RAINY)
+
+@pytest.fixture
+def cold_season():
+    config = get_default_configuration()
+    return create_season(config, date(2010, 11, 18), SeasonName.COLD)

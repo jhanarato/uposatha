@@ -37,8 +37,7 @@ class HalfMoon:
 @dataclass(frozen=True)
 class Holiday:
     name: HolidayName
-    # falls_on: date
-    # uposatha: Uposatha
+    uposatha: Uposatha
 
 @dataclass(frozen=True)
 class Season:

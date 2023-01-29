@@ -26,18 +26,17 @@ def is_last_season(config: Configuration, season: Season) -> bool:
     return is_end_season and is_end_year
 
 def create_season(config: Configuration, day_before: date, season_name: SeasonName) -> Season:
-    type_ = season_type(config.extra_month_years, config.extra_day_years, season_name, day_before.year)
-
-    uposatha_sequence = days_between_uposathas[type_]
-    half_moon_sequence = days_between_half_moons[type_]
+    season_type_ = season_type(config.extra_month_years, config.extra_day_years, season_name, day_before.year)
+    uposatha_sequence = days_between_uposathas[season_type_]
+    half_moon_sequence = days_between_half_moons[season_type_]
 
     uposathas = uposathas_in_season(uposatha_sequence, day_before)
     half_moons = half_moons_in_season(half_moon_sequence, day_before)
-    holidays = holidays_in_season(season_name, type_, uposathas)
+    holidays = holidays_in_season(season_name, season_type_, uposathas)
 
     return Season(
         name=season_name,
-        type=type_,
+        type=season_type_,
         first_day=day_before + timedelta(1),
         last_day=uposathas[-1].falls_on,
         uposathas=uposathas,
@@ -109,11 +108,13 @@ class HolidayLocation:
 def holidays_in_season(season_name: SeasonName,
                        season_type_: SeasonType,
                        uposathas: Tuple[Uposatha, ...]) -> Tuple[Holiday]:
-    pavarana = HolidayLocation(
-        name=HolidayName.PAVARANA,
-        season=SeasonName.RAINY,
-        normal_position=6,
-        extra_month_position=6
-    )
+    holidays = []
 
-    return Holiday(name=HolidayName.PAVARANA),
+    match (season_name, season_type_):
+        case (SeasonName.RAINY, _):
+            holidays.append(
+                Holiday(name=HolidayName.PAVARANA,
+                        uposatha=uposathas[5])
+            )
+
+    return tuple(holidays)
