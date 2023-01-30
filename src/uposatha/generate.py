@@ -107,13 +107,15 @@ def is_last_season(config: Configuration, season: Season) -> bool:
     is_end_season = config.end_season == season.name
     return is_end_season and is_end_year
 
-def get_season_type(season_name: SeasonName, begins_in_year_type: YearType) -> SeasonType:
-    if season_name == SeasonName.HOT:
-        if begins_in_year_type == YearType.EXTRA_MONTH:
-            return SeasonType.EXTRA_MONTH
-        if begins_in_year_type == YearType.EXTRA_DAY:
-            return SeasonType.EXTRA_DAY
-    return SeasonType.NORMAL
+def get_season_type(season_name: SeasonName, year_type: YearType) -> SeasonType:
+    match (season_name, year_type):
+        case (SeasonName.HOT, YearType.EXTRA_MONTH):
+            season_type = SeasonType.EXTRA_MONTH
+        case (SeasonName.HOT, YearType.EXTRA_DAY):
+            season_type = SeasonType.EXTRA_DAY
+        case _:
+            season_type = SeasonType.NORMAL
+    return season_type
 
 def year_type_of_date(extra_month_years: List[int],
                       extra_day_years: List[int],
