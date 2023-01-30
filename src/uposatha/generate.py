@@ -79,28 +79,18 @@ def generate_half_moons(sequence: Tuple[int, ...],
     )
 
 def generate_holidays(season_name: SeasonName,
-                      year_type: YearType,
+                      ends_in_year_type: YearType,
                       uposathas: Tuple[Uposatha, ...]) -> Tuple[Holiday]:
-    holidays = []
-
-    match (season_name, year_type):
+    match (season_name, ends_in_year_type):
         case (SeasonName.RAINY, _):
-            holidays.append(
-                Holiday(name=HolidayName.PAVARANA,
-                        uposatha=uposathas[5])
-            )
+            holidays = (Holiday(name=HolidayName.PAVARANA, uposatha=uposathas[5]),)
         case (SeasonName.COLD, YearType.NORMAL) | (SeasonName.COLD, YearType.EXTRA_DAY):
-            holidays.append(
-                Holiday(name=HolidayName.MAGHA,
-                        uposatha=uposathas[5])
-            )
+            holidays = (Holiday(name=HolidayName.MAGHA, uposatha=uposathas[5]),)
         case (SeasonName.COLD, YearType.EXTRA_MONTH):
-            holidays.append(
-                Holiday(name=HolidayName.MAGHA,
-                        uposatha=uposathas[7])
-            )
-
-    return tuple(holidays)
+            holidays = (Holiday(name=HolidayName.MAGHA, uposatha=uposathas[7]),)
+        case _:
+            holidays = ()
+    return holidays
 
 def is_last_season(config: Configuration, season: Season) -> bool:
     is_end_year = config.end_year == season.last_day.year
