@@ -1,5 +1,5 @@
 from datetime import date
-
+from typing import List
 import pytest
 
 from uposatha.calendar import Calendar
@@ -18,6 +18,14 @@ def test_magha_puja_when_next_season_long_with_extra_month(cold_before_extra_mon
     assert magha_pujas[0].uposatha.number_in_season == 8
     assert magha_pujas[0].uposatha.falls_on == date(2012, 3, 7)
 
+def holiday_dates(holiday_name: HolidayName) -> List[date]:
+    calendar = Calendar()
+    holidays = []
+    for season in calendar.seasons:
+        holidays.extend(holiday for holiday in season.holidays if holiday.name == holiday_name)
+
+    return [holiday.uposatha.falls_on for holiday in holidays]
+
 @pytest.mark.parametrize(
     "holiday_date",
     [
@@ -28,10 +36,17 @@ def test_magha_puja_when_next_season_long_with_extra_month(cold_before_extra_mon
     ]
 )
 def test_all_magha_puja_dates(holiday_date):
-    calendar = Calendar()
-    holidays = []
-    for season in calendar.seasons:
-        holidays.extend(holiday for holiday in season.holidays if holiday.name == HolidayName.MAGHA)
+    dates = holiday_dates(HolidayName.MAGHA)
+    assert date.fromisoformat(holiday_date) in dates
 
-    holiday_dates = [holiday.uposatha.falls_on for holiday in holidays]
-    assert date.fromisoformat(holiday_date) in holiday_dates
+@pytest.mark.parametrize(
+    "holiday_date",
+    [
+        "2010-10-23", "2011-10-12", "2012-10-30", "2013-10-19", "2014-10-08", "2015-10-27",
+        "2016-10-16", "2017-10-05", "2018-10-24", "2019-10-13", "2020-10-02", "2021-10-21",
+        "2022-10-10", "2023-10-29", "2024-10-17", "2025-10-07", "2026-10-26", "2027-10-15",
+        "2028-10-03", "2029-10-22", "2030-10-12"]
+)
+def test_all_pavarana_dates(holiday_date):
+    dates = holiday_dates(HolidayName.PAVARANA)
+    assert date.fromisoformat(holiday_date) in dates
