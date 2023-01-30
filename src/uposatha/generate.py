@@ -44,23 +44,6 @@ def generate_season(config: Configuration, day_before: date, season_name: Season
         holidays=holidays
     )
 
-def season_type(extra_month_years: List[int], extra_day_years: List[int],
-                season_name: SeasonName, begins_in_year: int) -> SeasonType:
-    if season_name == SeasonName.HOT:
-        if begins_in_year in extra_month_years:
-            return SeasonType.EXTRA_MONTH
-        if begins_in_year in extra_day_years:
-            return SeasonType.EXTRA_DAY
-    return SeasonType.NORMAL
-
-def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
-    names_in_order = [SeasonName.RAINY, SeasonName.COLD, SeasonName.HOT]
-    names_looped = cycle(names_in_order)
-    skipped_to_start = dropwhile(lambda name: name != start_name, names_looped)
-
-    while True:
-        yield next(skipped_to_start)
-
 def generate_uposathas(sequence: Tuple[int, ...],
                        day_before: date) -> Tuple[Uposatha, ...]:
     return tuple(
@@ -87,17 +70,6 @@ def generate_half_moons(sequence: Tuple[int, ...],
         )
     )
 
-def seq_to_date(sequence: Tuple[int, ...], day_before: date) -> Tuple[date, ...]:
-    return tuple(day_before + timedelta(days) for days in accumulate(sequence))
-
-def seq_to_position(length: int):
-    return tuple(range(1, length + 1))
-
-def phases(length: int, p: List[MoonPhase]) -> Tuple[MoonPhase]:
-    p = cycle(p)
-    p = islice(p, length)
-    return tuple(p)
-
 def generate_holidays(season_name: SeasonName,
                       season_type_: SeasonType,
                       uposathas: Tuple[Uposatha, ...]) -> Tuple[Holiday]:
@@ -111,3 +83,31 @@ def generate_holidays(season_name: SeasonName,
             )
 
     return tuple(holidays)
+
+def season_type(extra_month_years: List[int], extra_day_years: List[int],
+                season_name: SeasonName, begins_in_year: int) -> SeasonType:
+    if season_name == SeasonName.HOT:
+        if begins_in_year in extra_month_years:
+            return SeasonType.EXTRA_MONTH
+        if begins_in_year in extra_day_years:
+            return SeasonType.EXTRA_DAY
+    return SeasonType.NORMAL
+
+def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
+    names_in_order = [SeasonName.RAINY, SeasonName.COLD, SeasonName.HOT]
+    names_looped = cycle(names_in_order)
+    skipped_to_start = dropwhile(lambda name: name != start_name, names_looped)
+
+    while True:
+        yield next(skipped_to_start)
+
+def seq_to_date(sequence: Tuple[int, ...], day_before: date) -> Tuple[date, ...]:
+    return tuple(day_before + timedelta(days) for days in accumulate(sequence))
+
+def seq_to_position(length: int):
+    return tuple(range(1, length + 1))
+
+def phases(length: int, p: List[MoonPhase]) -> Tuple[MoonPhase]:
+    p = cycle(p)
+    p = islice(p, length)
+    return tuple(p)
