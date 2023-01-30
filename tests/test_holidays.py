@@ -64,3 +64,16 @@ def test_all_pavarana_dates(holiday_date):
 def test_all_vesak_dates(holiday_date):
     dates = holiday_dates(HolidayName.VESAK)
     assert date.fromisoformat(holiday_date) in dates
+
+@pytest.mark.parametrize(
+    "holiday_date",
+    [
+        "2010-07-26", "2011-07-15", "2012-08-02", "2013-07-22", "2014-07-11", "2015-07-30",
+        "2016-07-19", "2017-07-08", "2018-07-27", "2019-07-16", "2020-07-05", "2021-07-24",
+        "2022-07-13", "2023-08-01", "2024-07-20", "2025-07-10", "2026-07-29", "2027-07-18",
+        "2028-07-06", "2029-07-25", "2030-07-15"
+    ]
+)
+def test_all_asalha_dates(holiday_date):
+    dates = holiday_dates(HolidayName.ASALHA)
+    assert date.fromisoformat(holiday_date) in dates
