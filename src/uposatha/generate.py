@@ -34,6 +34,10 @@ def generate_season(extra_month_years: List[int],
     half_moons = generate_half_moons(half_moon_sequence, day_before)
 
     last_day = uposathas[-1].falls_on
+
+    # Magha Puja uposatha depends on whether the next hot season has an extra month.
+    # Since we haven't generated the next month yet we'll need to know what sort of
+    # year the cold season ends in.
     year_type = get_year_type(extra_month_years, extra_day_years, last_day.year)
     holidays = generate_holidays(season_name, year_type, uposathas)
 
