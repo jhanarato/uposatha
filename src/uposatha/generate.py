@@ -86,23 +86,23 @@ def generate_holidays(season_name: SeasonName,
             holidays = (
                 Holiday(name=HolidayName.PAVARANA, uposatha=uposathas[5]),
             )
-        case (SeasonName.COLD, YearType.NORMAL) | (SeasonName.COLD, YearType.EXTRA_DAY):
-            holidays = (
-                Holiday(name=HolidayName.MAGHA, uposatha=uposathas[5]),
-            )
         case (SeasonName.COLD, YearType.EXTRA_MONTH):
             holidays = (
                 Holiday(name=HolidayName.MAGHA, uposatha=uposathas[7]),
             )
-        case (SeasonName.HOT, YearType.NORMAL) | (SeasonName.HOT, YearType.EXTRA_DAY):
+        case (SeasonName.COLD, _):
             holidays = (
-                Holiday(name=HolidayName.VESAK, uposatha=uposathas[3]),
-                Holiday(name=HolidayName.ASALHA, uposatha=uposathas[7])
+                Holiday(name=HolidayName.MAGHA, uposatha=uposathas[5]),
             )
         case (SeasonName.HOT, YearType.EXTRA_MONTH):
             holidays = (
                 Holiday(name=HolidayName.VESAK, uposatha=uposathas[5]),
                 Holiday(name=HolidayName.ASALHA, uposatha=uposathas[9])
+            )
+        case(SeasonName.HOT, _):
+            holidays = (
+                Holiday(name=HolidayName.VESAK, uposatha=uposathas[3]),
+                Holiday(name=HolidayName.ASALHA, uposatha=uposathas[7])
             )
         case _:
             holidays = ()
