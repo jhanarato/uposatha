@@ -10,7 +10,7 @@ from uposatha.generate import generate_season, season_names, seq_to_date
 @pytest.fixture
 def first_season():
     config = get_default_configuration()
-    return generate_season(config, config.start_date, config.start_season)
+    return generate_season(config.extra_month_years, config.extra_day_years, config.start_date, config.start_season)
 
 def test_add_uposathas_to_season(first_season):
     assert len(first_season.uposathas) == 10

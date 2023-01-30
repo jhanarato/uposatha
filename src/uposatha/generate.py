@@ -4,36 +4,44 @@ from itertools import cycle, dropwhile, accumulate, islice
 from dataclasses import dataclass
 
 from uposatha.configure import Configuration
-from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase, HalfMoon, Holiday, HolidayName, SeasonType
+from uposatha.elements import YearType, SeasonType
+from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase, HalfMoon, Holiday, HolidayName
 from uposatha.elements import days_between_uposathas, days_between_half_moons
 
 
 def generate_seasons(config: Configuration) -> List[Season]:
     names = season_names(config.start_season)
-    season = generate_season(config, config.start_date, next(names))
+    season = generate_season(config.extra_month_years, config.extra_day_years, config.start_date, next(names))
 
     seasons = [season]
 
     while not is_last_season(config, season):
-        season = generate_season(config, season.last_day, next(names))
+        season = generate_season(config.extra_month_years, config.extra_day_years, season.last_day, next(names))
         seasons.append(season)
 
     return seasons
 
-def generate_season(config: Configuration, day_before: date, season_name: SeasonName) -> Season:
-    season_type_ = season_type(config.extra_month_years, config.extra_day_years, season_name, day_before.year)
-    uposatha_sequence = days_between_uposathas[season_type_]
-    half_moon_sequence = days_between_half_moons[season_type_]
+def generate_season(extra_month_years: List[int],
+                    extra_day_years: List[int],
+                    day_before: date,
+                    season_name: SeasonName) -> Season:
+    season_type = get_season_type(extra_month_years, extra_day_years, season_name, day_before.year)
+
+    uposatha_sequence = days_between_uposathas[season_type]
+    half_moon_sequence = days_between_half_moons[season_type]
 
     uposathas = generate_uposathas(uposatha_sequence, day_before)
     half_moons = generate_half_moons(half_moon_sequence, day_before)
-    holidays = generate_holidays(season_name, season_type_, uposathas)
+
+    last_day = uposathas[-1].falls_on
+    year_type = get_year_type(extra_month_years, extra_day_years, last_day.year)
+    holidays = generate_holidays(season_name, year_type, uposathas)
 
     return Season(
         name=season_name,
-        type=season_type_,
+        type=season_type,
         first_day=day_before + timedelta(1),
-        last_day=uposathas[-1].falls_on,
+        last_day=last_day,
         uposathas=uposathas,
         half_moons=half_moons,
         holidays=holidays
@@ -66,11 +74,11 @@ def generate_half_moons(sequence: Tuple[int, ...],
     )
 
 def generate_holidays(season_name: SeasonName,
-                      season_type_: SeasonType,
+                      year_type: YearType,
                       uposathas: Tuple[Uposatha, ...]) -> Tuple[Holiday]:
     holidays = []
 
-    match (season_name, season_type_):
+    match (season_name, year_type):
         case (SeasonName.RAINY, _):
             holidays.append(
                 Holiday(name=HolidayName.PAVARANA,
@@ -84,14 +92,23 @@ def is_last_season(config: Configuration, season: Season) -> bool:
     is_end_season = config.end_season == season.name
     return is_end_season and is_end_year
 
-def season_type(extra_month_years: List[int], extra_day_years: List[int],
-                season_name: SeasonName, begins_in_year: int) -> SeasonType:
+def get_season_type(extra_month_years: List[int], extra_day_years: List[int],
+                    season_name: SeasonName, begins_in_year: int) -> SeasonType:
     if season_name == SeasonName.HOT:
         if begins_in_year in extra_month_years:
             return SeasonType.EXTRA_MONTH
         if begins_in_year in extra_day_years:
             return SeasonType.EXTRA_DAY
     return SeasonType.NORMAL
+
+def get_year_type(extra_month_years: List[int],
+                  extra_day_years: List[int],
+                  year: int) -> YearType:
+    if year in extra_month_years:
+        return YearType.EXTRA_MONTH
+    if year in extra_day_years:
+        return YearType.EXTRA_DAY
+    return YearType.NORMAL
 
 def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
     names_in_order = [SeasonName.RAINY, SeasonName.COLD, SeasonName.HOT]

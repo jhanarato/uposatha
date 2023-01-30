@@ -13,6 +13,11 @@ class SeasonType(Enum):
     EXTRA_MONTH = "Extra Month"
     EXTRA_DAY = "Extra Day"
 
+class YearType(Enum):
+    NORMAL = "Normal"
+    EXTRA_MONTH = "Extra Month"
+    EXTRA_DAY = "Extra Day"
+
 class MoonPhase(Enum):
     WANING = "Waning"
     NEW = "New"
