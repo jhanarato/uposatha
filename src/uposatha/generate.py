@@ -25,7 +25,8 @@ def generate_season(extra_month_years: List[int],
                     extra_day_years: List[int],
                     day_before: date,
                     season_name: SeasonName) -> Season:
-    season_type = get_season_type(extra_month_years, extra_day_years, season_name, day_before.year)
+    begins_in_year_type = year_type_of_date(extra_month_years, extra_day_years, day_before)
+    season_type = get_season_type(season_name, begins_in_year_type)
 
     uposatha_sequence = days_between_uposathas[season_type]
     half_moon_sequence = days_between_half_moons[season_type]
@@ -33,19 +34,19 @@ def generate_season(extra_month_years: List[int],
     uposathas = generate_uposathas(uposatha_sequence, day_before)
     half_moons = generate_half_moons(half_moon_sequence, day_before)
 
-    last_day = uposathas[-1].falls_on
+    last_day_in_season = uposathas[-1].falls_on
 
     # Magha Puja uposatha depends on whether the next hot season has an extra month.
     # Since we haven't generated the next month yet we'll need to know what sort of
     # year the cold season ends in.
-    year_type = get_year_type(extra_month_years, extra_day_years, last_day.year)
-    holidays = generate_holidays(season_name, year_type, uposathas)
+    ends_in_year_type = year_type_of_date(extra_month_years, extra_day_years, last_day_in_season)
+    holidays = generate_holidays(season_name, ends_in_year_type, uposathas)
 
     return Season(
         name=season_name,
         type=season_type,
         first_day=day_before + timedelta(1),
-        last_day=last_day,
+        last_day=last_day_in_season,
         uposathas=uposathas,
         half_moons=half_moons,
         holidays=holidays
@@ -106,21 +107,20 @@ def is_last_season(config: Configuration, season: Season) -> bool:
     is_end_season = config.end_season == season.name
     return is_end_season and is_end_year
 
-def get_season_type(extra_month_years: List[int], extra_day_years: List[int],
-                    season_name: SeasonName, begins_in_year: int) -> SeasonType:
+def get_season_type(season_name: SeasonName, begins_in_year_type: YearType) -> SeasonType:
     if season_name == SeasonName.HOT:
-        if begins_in_year in extra_month_years:
+        if begins_in_year_type == YearType.EXTRA_MONTH:
             return SeasonType.EXTRA_MONTH
-        if begins_in_year in extra_day_years:
+        if begins_in_year_type == YearType.EXTRA_DAY:
             return SeasonType.EXTRA_DAY
     return SeasonType.NORMAL
 
-def get_year_type(extra_month_years: List[int],
-                  extra_day_years: List[int],
-                  year: int) -> YearType:
-    if year in extra_month_years:
+def year_type_of_date(extra_month_years: List[int],
+                      extra_day_years: List[int],
+                      date_: date) -> YearType:
+    if date_.year in extra_month_years:
         return YearType.EXTRA_MONTH
-    if year in extra_day_years:
+    if date_.year in extra_day_years:
         return YearType.EXTRA_DAY
     return YearType.NORMAL
 
