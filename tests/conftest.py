@@ -3,7 +3,7 @@ from datetime import date
 import pytest
 
 from uposatha.elements import SeasonName
-from uposatha.generate import create_season
+from uposatha.generate import generate_season
 from uposatha.configure import get_default_configuration
 from uposatha.calendar import Calendar
 
@@ -34,17 +34,17 @@ def extra_day_half_moon_sequence():
 @pytest.fixture
 def long_hot_season():
     config = get_default_configuration()
-    return create_season(config, date(2010, 2, 28), SeasonName.HOT)
+    return generate_season(config, date(2010, 2, 28), SeasonName.HOT)
 
 @pytest.fixture
 def rainy_season():
     config = get_default_configuration()
-    return create_season(config, date(2010, 7, 26), SeasonName.RAINY)
+    return generate_season(config, date(2010, 7, 26), SeasonName.RAINY)
 
 @pytest.fixture
 def cold_season():
     config = get_default_configuration()
-    return create_season(config, date(2010, 11, 18), SeasonName.COLD)
+    return generate_season(config, date(2010, 11, 18), SeasonName.COLD)
 
 @pytest.fixture
 def cold_before_extra_month_season():

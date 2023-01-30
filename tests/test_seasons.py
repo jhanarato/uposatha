@@ -3,7 +3,7 @@ from datetime import date
 import pytest
 
 from uposatha.configure import Configuration
-from uposatha.generate import get_seasons, is_last_season
+from uposatha.generate import generate_seasons, is_last_season
 from uposatha.elements import Season, SeasonName, SeasonType
 
 
@@ -25,7 +25,7 @@ def three_seasons():
         extra_month_years=[2010, 2012, 2015, 2018, 2021, 2023, 2026, 2029],
         extra_day_years=[2016, 2020, 2025, 2030]
     )
-    return get_seasons(config)
+    return generate_seasons(config)
 
 @pytest.mark.parametrize(
     "index,first_day",

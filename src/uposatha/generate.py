@@ -8,14 +8,14 @@ from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase, HalfMoon,
 from uposatha.elements import days_between_uposathas, days_between_half_moons
 
 
-def get_seasons(config: Configuration) -> List[Season]:
+def generate_seasons(config: Configuration) -> List[Season]:
     names = season_names(config.start_season)
-    season = create_season(config, config.start_date, next(names))
+    season = generate_season(config, config.start_date, next(names))
 
     seasons = [season]
 
     while not is_last_season(config, season):
-        season = create_season(config, season.last_day, next(names))
+        season = generate_season(config, season.last_day, next(names))
         seasons.append(season)
 
     return seasons
@@ -25,14 +25,14 @@ def is_last_season(config: Configuration, season: Season) -> bool:
     is_end_season = config.end_season == season.name
     return is_end_season and is_end_year
 
-def create_season(config: Configuration, day_before: date, season_name: SeasonName) -> Season:
+def generate_season(config: Configuration, day_before: date, season_name: SeasonName) -> Season:
     season_type_ = season_type(config.extra_month_years, config.extra_day_years, season_name, day_before.year)
     uposatha_sequence = days_between_uposathas[season_type_]
     half_moon_sequence = days_between_half_moons[season_type_]
 
-    uposathas = uposathas_in_season(uposatha_sequence, day_before)
-    half_moons = half_moons_in_season(half_moon_sequence, day_before)
-    holidays = holidays_in_season(season_name, season_type_, uposathas)
+    uposathas = generate_uposathas(uposatha_sequence, day_before)
+    half_moons = generate_half_moons(half_moon_sequence, day_before)
+    holidays = generate_holidays(season_name, season_type_, uposathas)
 
     return Season(
         name=season_name,
@@ -61,8 +61,8 @@ def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
     while True:
         yield next(skipped_to_start)
 
-def uposathas_in_season(sequence: Tuple[int, ...],
-                        day_before: date) -> Tuple[Uposatha, ...]:
+def generate_uposathas(sequence: Tuple[int, ...],
+                       day_before: date) -> Tuple[Uposatha, ...]:
     return tuple(
         map(Uposatha,
             seq_to_date(sequence, day_before),
@@ -75,8 +75,8 @@ def uposathas_in_season(sequence: Tuple[int, ...],
         )
     )
 
-def half_moons_in_season(sequence: Tuple[int, ...],
-                         day_before: date) -> Tuple[HalfMoon, ...]:
+def generate_half_moons(sequence: Tuple[int, ...],
+                        day_before: date) -> Tuple[HalfMoon, ...]:
     return tuple(
         map(HalfMoon,
             seq_to_date(sequence, day_before),
@@ -98,16 +98,9 @@ def phases(length: int, p: List[MoonPhase]) -> Tuple[MoonPhase]:
     p = islice(p, length)
     return tuple(p)
 
-@dataclass(frozen=True)
-class HolidayLocation:
-    name: HolidayName
-    season: SeasonName
-    normal_position: int
-    extra_month_position: int
-
-def holidays_in_season(season_name: SeasonName,
-                       season_type_: SeasonType,
-                       uposathas: Tuple[Uposatha, ...]) -> Tuple[Holiday]:
+def generate_holidays(season_name: SeasonName,
+                      season_type_: SeasonType,
+                      uposathas: Tuple[Uposatha, ...]) -> Tuple[Holiday]:
     holidays = []
 
     match (season_name, season_type_):
