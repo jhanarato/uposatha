@@ -3,7 +3,7 @@ from datetime import date
 import pytest
 
 from uposatha.elements import SeasonName
-from uposatha.assemble import create_season
+from uposatha.generate import create_season
 from uposatha.configure import get_default_configuration
 from uposatha.calendar import Calendar
 

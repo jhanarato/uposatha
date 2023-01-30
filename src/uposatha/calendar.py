@@ -1,5 +1,5 @@
 from uposatha.configure import get_default_configuration
-from uposatha.assemble import get_seasons
+from uposatha.generate import get_seasons
 
 class Calendar:
     def __init__(self):

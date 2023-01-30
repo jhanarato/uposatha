@@ -3,7 +3,7 @@ from datetime import date
 import pytest
 
 from uposatha.configure import Configuration
-from uposatha.assemble import get_seasons, is_last_season
+from uposatha.generate import get_seasons, is_last_season
 from uposatha.elements import Season, SeasonName, SeasonType
 
 

@@ -4,7 +4,7 @@ import pytest
 
 from uposatha.elements import SeasonName, MoonPhase
 from uposatha.configure import get_default_configuration
-from uposatha.assemble import create_season, season_names, seq_to_date
+from uposatha.generate import create_season, season_names, seq_to_date
 
 
 @pytest.fixture
