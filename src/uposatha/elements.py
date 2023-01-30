@@ -26,6 +26,9 @@ class MoonPhase(Enum):
 
 class HolidayName(Enum):
     PAVARANA = "Pavarana Day"
+    VESAK = "Vesak Day"
+    MAGHA = "Magha Puja"
+    ASALHA = "Asalha Puja"
 
 @dataclass(frozen=True)
 class Uposatha:

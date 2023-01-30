@@ -88,6 +88,16 @@ def generate_holidays(season_name: SeasonName,
                 Holiday(name=HolidayName.PAVARANA,
                         uposatha=uposathas[5])
             )
+        case (SeasonName.COLD, YearType.NORMAL) | (SeasonName.COLD, YearType.EXTRA_DAY):
+            holidays.append(
+                Holiday(name=HolidayName.MAGHA,
+                        uposatha=uposathas[5])
+            )
+        case (SeasonName.COLD, YearType.EXTRA_MONTH):
+            holidays.append(
+                Holiday(name=HolidayName.MAGHA,
+                        uposatha=uposathas[7])
+            )
 
     return tuple(holidays)
 
