@@ -83,11 +83,25 @@ def generate_holidays(season_name: SeasonName,
                       uposathas: Tuple[Uposatha, ...]) -> Tuple[Holiday]:
     match (season_name, ends_in_year_type):
         case (SeasonName.RAINY, _):
-            holidays = (Holiday(name=HolidayName.PAVARANA, uposatha=uposathas[5]),)
+            holidays = (
+                Holiday(name=HolidayName.PAVARANA, uposatha=uposathas[5]),
+            )
         case (SeasonName.COLD, YearType.NORMAL) | (SeasonName.COLD, YearType.EXTRA_DAY):
-            holidays = (Holiday(name=HolidayName.MAGHA, uposatha=uposathas[5]),)
+            holidays = (
+                Holiday(name=HolidayName.MAGHA, uposatha=uposathas[5]),
+            )
         case (SeasonName.COLD, YearType.EXTRA_MONTH):
-            holidays = (Holiday(name=HolidayName.MAGHA, uposatha=uposathas[7]),)
+            holidays = (
+                Holiday(name=HolidayName.MAGHA, uposatha=uposathas[7]),
+            )
+        case (SeasonName.HOT, YearType.NORMAL) | (SeasonName.HOT, YearType.EXTRA_DAY):
+            holidays = (
+                Holiday(name=HolidayName.VESAK, uposatha=uposathas[3]),
+            )
+        case (SeasonName.HOT, YearType.EXTRA_MONTH):
+            holidays = (
+                Holiday(name=HolidayName.VESAK, uposatha=uposathas[5]),
+            )
         case _:
             holidays = ()
     return holidays
