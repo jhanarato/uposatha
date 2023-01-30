@@ -20,11 +20,6 @@ def generate_seasons(config: Configuration) -> List[Season]:
 
     return seasons
 
-def is_last_season(config: Configuration, season: Season) -> bool:
-    is_end_year = config.end_year == season.last_day.year
-    is_end_season = config.end_season == season.name
-    return is_end_season and is_end_year
-
 def generate_season(config: Configuration, day_before: date, season_name: SeasonName) -> Season:
     season_type_ = season_type(config.extra_month_years, config.extra_day_years, season_name, day_before.year)
     uposatha_sequence = days_between_uposathas[season_type_]
@@ -83,6 +78,11 @@ def generate_holidays(season_name: SeasonName,
             )
 
     return tuple(holidays)
+
+def is_last_season(config: Configuration, season: Season) -> bool:
+    is_end_year = config.end_year == season.last_day.year
+    is_end_season = config.end_season == season.name
+    return is_end_season and is_end_year
 
 def season_type(extra_month_years: List[int], extra_day_years: List[int],
                 season_name: SeasonName, begins_in_year: int) -> SeasonType:
