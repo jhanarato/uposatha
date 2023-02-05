@@ -1,5 +1,5 @@
 import datetime
-from itertools import dropwhile
+from typing import Generator, Tuple
 
 from uposatha.configure import get_default_configuration
 from uposatha.generate import generate_seasons
@@ -23,3 +23,8 @@ class Calendar:
         for uposatha in season.uposathas:
             if uposatha.falls_on >= today:
                 return uposatha
+
+    def season_uposatha_seq(self) -> Generator[Tuple[Season, Uposatha], None, None]:
+        for season in self.seasons:
+            for uposatha in season.uposathas:
+                yield season, uposatha
