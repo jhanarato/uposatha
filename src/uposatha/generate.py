@@ -9,7 +9,7 @@ from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase, HalfMoon,
 from uposatha.elements import days_between_uposathas, days_between_half_moons
 
 
-def generate_seasons(config: Configuration) -> List[Season]:
+def generate_seasons(config: Configuration) -> Tuple[Season]:
     names = season_names(config.start_season)
     season = generate_season(config.extra_month_years, config.extra_day_years, config.start_date, next(names))
 
@@ -19,7 +19,7 @@ def generate_seasons(config: Configuration) -> List[Season]:
         season = generate_season(config.extra_month_years, config.extra_day_years, season.last_day, next(names))
         seasons.append(season)
 
-    return seasons
+    return tuple(seasons)
 
 def generate_season(extra_month_years: List[int],
                     extra_day_years: List[int],
@@ -84,25 +84,40 @@ def generate_holidays(season_name: SeasonName,
     match (season_name, ends_in_year_type):
         case (SeasonName.RAINY, _):
             holidays = (
-                Holiday(name=HolidayName.PAVARANA, uposatha=uposathas[5]),
+                Holiday(
+                    name=HolidayName.PAVARANA,
+                    uposatha=uposathas[5]
+                ),
             )
         case (SeasonName.COLD, YearType.EXTRA_MONTH):
             holidays = (
-                Holiday(name=HolidayName.MAGHA, uposatha=uposathas[7]),
+                Holiday(
+                    name=HolidayName.MAGHA,
+                    uposatha=uposathas[7]),
             )
         case (SeasonName.COLD, _):
             holidays = (
-                Holiday(name=HolidayName.MAGHA, uposatha=uposathas[5]),
+                Holiday(
+                    name=HolidayName.MAGHA,
+                    uposatha=uposathas[5]),
             )
         case (SeasonName.HOT, YearType.EXTRA_MONTH):
             holidays = (
-                Holiday(name=HolidayName.VESAK, uposatha=uposathas[5]),
-                Holiday(name=HolidayName.ASALHA, uposatha=uposathas[9])
+                Holiday(
+                    name=HolidayName.VESAK,
+                    uposatha=uposathas[5]),
+                Holiday(
+                    name=HolidayName.ASALHA,
+                    uposatha=uposathas[9])
             )
         case(SeasonName.HOT, _):
             holidays = (
-                Holiday(name=HolidayName.VESAK, uposatha=uposathas[3]),
-                Holiday(name=HolidayName.ASALHA, uposatha=uposathas[7])
+                Holiday(
+                    name=HolidayName.VESAK,
+                    uposatha=uposathas[3]),
+                Holiday(
+                    name=HolidayName.ASALHA,
+                    uposatha=uposathas[7])
             )
         case _:
             holidays = ()
