@@ -48,7 +48,7 @@ def test_missing_holiday_is_none(holiday_uposatha, holiday):
 
 
 def test_uposatha_holidays_in_season(holiday_uposatha, holiday):
-    season = Season(
+    seasons = [Season(
         name=SeasonName.HOT,
         type=SeasonType.EXTRA_MONTH,
         first_day=date(2023, 3, 7),
@@ -56,6 +56,6 @@ def test_uposatha_holidays_in_season(holiday_uposatha, holiday):
         half_moons=(),
         uposathas=(holiday_uposatha,),
         holidays=(holiday,)
-    )
+    )]
 
-    assert next(uposatha_holidays(season)) == (holiday_uposatha, holiday)
+    assert next(uposatha_holidays(seasons)) == (holiday_uposatha, holiday)
