@@ -1,7 +1,6 @@
 from typing import List, Tuple, Generator
 from datetime import date, timedelta
 from itertools import cycle, dropwhile, accumulate, islice
-from dataclasses import dataclass
 
 from uposatha.configure import Configuration
 from uposatha.elements import YearType, SeasonType
