@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import date
 from enum import Enum
-from typing import Tuple, Optional
+from typing import Optional
 
 
 class SeasonName(Enum):
@@ -64,9 +64,9 @@ class Holiday:
 class Season:
     name: SeasonName
     type: SeasonType
-    uposathas: Tuple[Uposatha, ...]
-    half_moons: Tuple[HalfMoon, ...]
-    holidays: Tuple[Holiday, ...]
+    uposathas: tuple[Uposatha, ...]
+    half_moons: tuple[HalfMoon, ...]
+    holidays: tuple[Holiday, ...]
     first_day: date
     last_day: date
 
