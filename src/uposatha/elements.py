@@ -74,12 +74,16 @@ class Season:
 _holiday_lookup: dict[Uposatha, Holiday] = dict()
 
 
+def clear_lookup() -> None:
+    _holiday_lookup.clear()
+
+
 def add_to_lookup(uposatha: Uposatha, holiday: Holiday) -> None:
     _holiday_lookup[uposatha] = holiday
 
 
 def lookup_holiday(uposatha: Uposatha) -> Optional[Holiday]:
-    return _holiday_lookup[uposatha]
+    return _holiday_lookup.get(uposatha)
 
 
 days_between_uposathas = {
