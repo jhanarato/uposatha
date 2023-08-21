@@ -1,22 +1,26 @@
-from typing import Literal, Tuple
-from dataclasses import dataclass, field
-from enum import Enum, auto
+from dataclasses import dataclass
 from datetime import date
+from enum import Enum
+from typing import Tuple
+
 
 class SeasonName(Enum):
     COLD = "Cold"
     HOT = "Hot"
     RAINY = "Rainy"
 
+
 class SeasonType(Enum):
     NORMAL = "Normal"
     EXTRA_MONTH = "Extra Month"
     EXTRA_DAY = "Extra Day"
 
+
 class YearType(Enum):
     NORMAL = "Normal"
     EXTRA_MONTH = "Extra Month"
     EXTRA_DAY = "Extra Day"
+
 
 class MoonPhase(Enum):
     WANING = "Waning"
@@ -24,11 +28,13 @@ class MoonPhase(Enum):
     WAXING = "Waxing"
     FULL = "Full"
 
+
 class HolidayName(Enum):
     PAVARANA = "Pavarana Day"
     VESAK = "Vesak Day"
     MAGHA = "Magha Puja"
     ASALHA = "Asalha Puja"
+
 
 @dataclass(frozen=True)
 class Uposatha:
@@ -37,15 +43,18 @@ class Uposatha:
     days_since_previous: int
     moon_phase: MoonPhase
 
+
 @dataclass(frozen=True)
 class HalfMoon:
     falls_on: date
     moon_phase: MoonPhase
 
+
 @dataclass(frozen=True)
 class Holiday:
     name: HolidayName
     uposatha: Uposatha
+
 
 @dataclass(frozen=True)
 class Season:
@@ -56,6 +65,7 @@ class Season:
     holidays: Tuple[Holiday, ...]
     first_day: date
     last_day: date
+
 
 days_between_uposathas = {
     SeasonType.NORMAL: (15, 15, 14, 15, 15, 15, 14, 15),

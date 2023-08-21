@@ -1,15 +1,19 @@
 from datetime import date
 from typing import List
+
 import pytest
 
 from uposatha.calendar import Calendar
-from uposatha.elements import HolidayName, SeasonName
+from uposatha.elements import HolidayName
+
 
 def test_pavarana_day_name(rainy_season):
     assert rainy_season.holidays[0].name == HolidayName.PAVARANA
 
+
 def test_pavarana_day_date(rainy_season):
     assert rainy_season.holidays[0].uposatha.falls_on == date(2010, 10, 23)
+
 
 def test_magha_puja_when_next_season_long_with_extra_month(cold_before_extra_month_season):
     holidays = cold_before_extra_month_season.holidays
@@ -18,6 +22,7 @@ def test_magha_puja_when_next_season_long_with_extra_month(cold_before_extra_mon
     assert magha_pujas[0].uposatha.number_in_season == 8
     assert magha_pujas[0].uposatha.falls_on == date(2012, 3, 7)
 
+
 def holiday_dates(holiday_name: HolidayName) -> List[date]:
     calendar = Calendar()
     holidays = []
@@ -25,6 +30,7 @@ def holiday_dates(holiday_name: HolidayName) -> List[date]:
         holidays.extend(holiday for holiday in season.holidays if holiday.name == holiday_name)
 
     return [holiday.uposatha.falls_on for holiday in holidays]
+
 
 @pytest.mark.parametrize(
     "holiday_date",
@@ -39,6 +45,7 @@ def test_all_magha_puja_dates(holiday_date):
     dates = holiday_dates(HolidayName.MAGHA)
     assert date.fromisoformat(holiday_date) in dates
 
+
 @pytest.mark.parametrize(
     "holiday_date",
     [
@@ -52,6 +59,7 @@ def test_all_pavarana_dates(holiday_date):
     dates = holiday_dates(HolidayName.PAVARANA)
     assert date.fromisoformat(holiday_date) in dates
 
+
 @pytest.mark.parametrize(
     "holiday_date",
     [
@@ -64,6 +72,7 @@ def test_all_pavarana_dates(holiday_date):
 def test_all_vesak_dates(holiday_date):
     dates = holiday_dates(HolidayName.VESAK)
     assert date.fromisoformat(holiday_date) in dates
+
 
 @pytest.mark.parametrize(
     "holiday_date",

@@ -3,7 +3,8 @@ from typing import Generator, Tuple
 
 from uposatha.configure import get_default_configuration
 from uposatha.generate import generate_seasons
-from uposatha.elements import Season, Uposatha, MoonPhase
+from uposatha.elements import Season, Uposatha
+
 
 class Calendar:
     def __init__(self):

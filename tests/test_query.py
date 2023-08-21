@@ -4,9 +4,11 @@ import pytest
 
 from uposatha.calendar import Calendar
 
+
 @pytest.fixture
 def calendar():
     return Calendar()
+
 
 @pytest.mark.parametrize(
     "today,next_falls_on",
@@ -18,6 +20,7 @@ def calendar():
 def test_next_uposatha(calendar, today, next_falls_on):
     next_uposatha = calendar.next_uposatha(today=today)
     assert next_uposatha.falls_on == next_falls_on
+
 
 @pytest.mark.parametrize(
     "today,first_day",

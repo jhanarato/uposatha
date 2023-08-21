@@ -14,6 +14,7 @@ class Configuration:
     extra_month_years: List[int]
     extra_day_years: List[int]
 
+
 def get_default_configuration() -> Configuration:
     return Configuration(
         start_date=datetime.date(2010, 2, 28),

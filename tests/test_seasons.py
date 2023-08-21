@@ -27,6 +27,7 @@ def three_seasons():
     )
     return generate_seasons(config)
 
+
 @pytest.mark.parametrize(
     "index,first_day",
     [
@@ -61,6 +62,7 @@ def test_three_seasons_last_day(three_seasons, index, last_day):
 )
 def test_three_seasons_name(three_seasons, index, season_name):
     assert three_seasons[index].name == season_name
+
 
 def test_is_last_season():
     config = Configuration(
