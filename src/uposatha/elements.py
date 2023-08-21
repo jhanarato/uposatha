@@ -43,6 +43,13 @@ class Uposatha:
     days_since_previous: int
     moon_phase: MoonPhase
 
+    @property
+    def holiday(self) -> "Holiday":
+        return Holiday(
+            name=HolidayName.ASALHA,
+            uposatha=self,
+        )
+
 
 @dataclass(frozen=True)
 class HalfMoon:
