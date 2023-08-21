@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import date
 from enum import Enum
-from typing import Tuple
+from typing import Tuple, Optional
 
 
 class SeasonName(Enum):
@@ -74,11 +74,23 @@ class Season:
     last_day: date
 
 
+_holiday_lookup: dict[Uposatha, Holiday] = dict()
+
+
+def add_to_lookup(uposatha: Uposatha, holiday: Holiday) -> None:
+    _holiday_lookup[uposatha] = holiday
+
+
+def lookup_holiday(uposatha: Uposatha) -> Optional[Holiday]:
+    return _holiday_lookup[uposatha]
+
+
 days_between_uposathas = {
     SeasonType.NORMAL: (15, 15, 14, 15, 15, 15, 14, 15),
     SeasonType.EXTRA_MONTH: (15, 15, 14, 15, 15, 15, 14, 15, 15, 15),
     SeasonType.EXTRA_DAY: (15, 15, 14, 15, 15, 15, 15, 15)
 }
+
 days_between_half_moons = {
     SeasonType.NORMAL: (8, 15, 15, 14, 15, 15, 15, 14),
     SeasonType.EXTRA_MONTH: (8, 15, 15, 14, 15, 15, 15, 14, 15, 15),
