@@ -23,21 +23,24 @@ def holiday(holiday_uposatha):
     )
 
 
-def test_add_to_lookup(holiday_uposatha, holiday):
+@pytest.fixture
+def lookup_available(holiday_uposatha, holiday):
     add_to_lookup(holiday_uposatha, holiday)
+    yield
+    clear_lookup()
+
+
+def test_add_to_lookup(holiday_uposatha, holiday, lookup_available):
     assert lookup_holiday(holiday_uposatha) == holiday
 
 
-def test_uposatha_retrieves_holiday(holiday_uposatha, holiday):
-    add_to_lookup(holiday_uposatha, holiday)
+def test_uposatha_retrieves_holiday(holiday_uposatha, holiday, lookup_available):
     assert holiday_uposatha.holiday == holiday
 
 
-def test_uposatha_holiday_chain(holiday_uposatha, holiday):
-    add_to_lookup(holiday_uposatha, holiday)
+def test_uposatha_holiday_chain(holiday_uposatha, holiday, lookup_available):
     assert holiday_uposatha.holiday.uposatha == holiday_uposatha
 
 
 def test_missing_holiday_is_none(holiday_uposatha, holiday):
-    clear_lookup()
     assert holiday_uposatha.holiday is None
