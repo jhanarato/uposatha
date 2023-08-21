@@ -67,3 +67,8 @@ def test_calendar_populates_lookup():
     asalha_uposatha = cal.next_uposatha(date(2023, 8, 1))
     assert asalha_uposatha.holiday.name == HolidayName.ASALHA
 
+
+def test_calendar_makes_no_holiday_uposathas():
+    cal = Calendar()
+    normal_uposatha = cal.next_uposatha(date(2023, 8, 2))
+    assert normal_uposatha.holiday is None
