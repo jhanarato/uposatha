@@ -45,10 +45,7 @@ class Uposatha:
 
     @property
     def holiday(self) -> "Holiday":
-        return Holiday(
-            name=HolidayName.ASALHA,
-            uposatha=self,
-        )
+        return lookup_holiday(self)
 
 
 @dataclass(frozen=True)
