@@ -2,6 +2,7 @@ from datetime import date
 
 import pytest
 
+from uposatha.calendar import Calendar
 from uposatha.elements import HolidayName, Uposatha, MoonPhase, Holiday, Season, SeasonName, SeasonType
 from uposatha.elements import add_to_lookup, lookup_holiday, clear_lookup
 from uposatha.generate import uposatha_holidays
@@ -59,3 +60,10 @@ def test_uposatha_holidays_in_season(holiday_uposatha, holiday):
     )]
 
     assert next(uposatha_holidays(seasons)) == (holiday_uposatha, holiday)
+
+
+def test_calendar_populates_lookup():
+    cal = Calendar()
+    asalha_uposatha = cal.next_uposatha(date(2023, 8, 1))
+    assert asalha_uposatha.holiday.name == HolidayName.ASALHA
+
