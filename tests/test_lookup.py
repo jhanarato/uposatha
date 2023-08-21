@@ -2,8 +2,9 @@ from datetime import date
 
 import pytest
 
-from uposatha.elements import HolidayName, Uposatha, MoonPhase, Holiday
+from uposatha.elements import HolidayName, Uposatha, MoonPhase, Holiday, Season, SeasonName, SeasonType
 from uposatha.elements import add_to_lookup, lookup_holiday, clear_lookup
+from uposatha.generate import uposatha_holidays
 
 
 @pytest.fixture
@@ -44,3 +45,17 @@ def test_uposatha_holiday_chain(holiday_uposatha, holiday, lookup_available):
 
 def test_missing_holiday_is_none(holiday_uposatha, holiday):
     assert holiday_uposatha.holiday is None
+
+
+def test_uposatha_holidays_in_season(holiday_uposatha, holiday):
+    season = Season(
+        name=SeasonName.HOT,
+        type=SeasonType.EXTRA_MONTH,
+        first_day=date(2023, 3, 7),
+        last_day=date(2023, 8, 1),
+        half_moons=(),
+        uposathas=(holiday_uposatha,),
+        holidays=(holiday,)
+    )
+
+    assert next(uposatha_holidays(season)) == (holiday_uposatha, holiday)

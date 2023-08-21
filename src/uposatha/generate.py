@@ -1,3 +1,4 @@
+from collections.abc import Iterator
 from typing import List, Tuple, Generator
 from datetime import date, timedelta
 from itertools import cycle, dropwhile, accumulate, islice
@@ -175,3 +176,8 @@ def phases(length: int, p: List[MoonPhase]) -> Tuple[MoonPhase]:
     p = cycle(p)
     p = islice(p, length)
     return tuple(p)
+
+
+def uposatha_holidays(season: Season) -> Iterator[tuple[Uposatha, Holiday]]:
+    for holiday in season.holidays:
+        yield holiday.uposatha, holiday
