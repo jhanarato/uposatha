@@ -1,5 +1,5 @@
 from collections.abc import Iterator, Iterable
-from typing import List, Tuple, Generator
+from typing import Generator
 from datetime import date, timedelta
 from itertools import cycle, dropwhile, accumulate, islice
 
@@ -9,7 +9,7 @@ from uposatha.elements import Season, SeasonName, Uposatha, MoonPhase, HalfMoon,
 from uposatha.elements import days_between_uposathas, days_between_half_moons
 
 
-def generate_seasons(config: Configuration) -> Tuple[Season]:
+def generate_seasons(config: Configuration) -> tuple[Season, ...]:
     names = season_names(config.start_season)
     season = generate_season(config.extra_month_years, config.extra_day_years, config.start_date, next(names))
 
@@ -22,8 +22,8 @@ def generate_seasons(config: Configuration) -> Tuple[Season]:
     return tuple(seasons)
 
 
-def generate_season(extra_month_years: List[int],
-                    extra_day_years: List[int],
+def generate_season(extra_month_years: list[int],
+                    extra_day_years: list[int],
                     day_before: date,
                     season_name: SeasonName) -> Season:
     begins_in_year_type = year_type_of_date(extra_month_years, extra_day_years, day_before)
@@ -54,8 +54,8 @@ def generate_season(extra_month_years: List[int],
     )
 
 
-def generate_uposathas(sequence: Tuple[int, ...],
-                       day_before: date) -> Tuple[Uposatha, ...]:
+def generate_uposathas(sequence: tuple[int, ...],
+                       day_before: date) -> tuple[Uposatha, ...]:
     return tuple(
         map(Uposatha,
             seq_to_date(sequence, day_before),
@@ -69,8 +69,8 @@ def generate_uposathas(sequence: Tuple[int, ...],
     )
 
 
-def generate_half_moons(sequence: Tuple[int, ...],
-                        day_before: date) -> Tuple[HalfMoon, ...]:
+def generate_half_moons(sequence: tuple[int, ...],
+                        day_before: date) -> tuple[HalfMoon, ...]:
     return tuple(
         map(HalfMoon,
             seq_to_date(sequence, day_before),
@@ -84,7 +84,9 @@ def generate_half_moons(sequence: Tuple[int, ...],
 
 def generate_holidays(season_name: SeasonName,
                       ends_in_year_type: YearType,
-                      uposathas: Tuple[Uposatha, ...]) -> Tuple[Holiday]:
+                      uposathas: tuple[Uposatha, ...]) -> tuple[Holiday, ...]:
+    holidays: tuple[Holiday, ...] = ()
+
     match (season_name, ends_in_year_type):
         case (SeasonName.RAINY, _):
             holidays = (
@@ -112,7 +114,7 @@ def generate_holidays(season_name: SeasonName,
                     uposatha=uposathas[5]),
                 Holiday(
                     name=HolidayName.ASALHA,
-                    uposatha=uposathas[9])
+                    uposatha=uposathas[9]),
             )
         case (SeasonName.HOT, _):
             holidays = (
@@ -121,7 +123,7 @@ def generate_holidays(season_name: SeasonName,
                     uposatha=uposathas[3]),
                 Holiday(
                     name=HolidayName.ASALHA,
-                    uposatha=uposathas[7])
+                    uposatha=uposathas[7]),
             )
         case _:
             holidays = ()
@@ -145,8 +147,8 @@ def get_season_type(season_name: SeasonName, year_type: YearType) -> SeasonType:
     return season_type
 
 
-def year_type_of_date(extra_month_years: List[int],
-                      extra_day_years: List[int],
+def year_type_of_date(extra_month_years: list[int],
+                      extra_day_years: list[int],
                       date_: date) -> YearType:
     if date_.year in extra_month_years:
         return YearType.EXTRA_MONTH
@@ -164,7 +166,7 @@ def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
         yield next(skipped_to_start)
 
 
-def seq_to_date(sequence: Tuple[int, ...], day_before: date) -> Tuple[date, ...]:
+def seq_to_date(sequence: tuple[int, ...], day_before: date) -> tuple[date, ...]:
     return tuple(day_before + timedelta(days) for days in accumulate(sequence))
 
 
@@ -172,7 +174,7 @@ def seq_to_position(length: int):
     return tuple(range(1, length + 1))
 
 
-def phases(length: int, p: List[MoonPhase]) -> Tuple[MoonPhase]:
+def phases(length: int, p: list[MoonPhase]) -> tuple[MoonPhase]:
     p = cycle(p)
     p = islice(p, length)
     return tuple(p)
