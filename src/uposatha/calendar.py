@@ -19,9 +19,16 @@ class Calendar:
             add_to_lookup(up, hol)
 
     def current_season(self, today: datetime.date = datetime.date.today()) -> Season:
+        current = None
+
         for season in self.seasons:
             if season.first_day <= today <= season.last_day:
-                return season
+                current = season
+
+        if not current:
+            raise ValueError("No season available.")
+
+        return current
 
     def next_uposatha(self, today: datetime.date = datetime.date.today()) -> Uposatha:
         """ Get the next uposatha. If today is the uposatha return today's uposatha. """
