@@ -1,5 +1,4 @@
 from collections.abc import Iterator, Iterable
-from typing import Generator
 from datetime import date, timedelta
 from itertools import cycle, dropwhile, accumulate, islice
 
@@ -157,7 +156,7 @@ def year_type_of_date(extra_month_years: list[int],
     return YearType.NORMAL
 
 
-def season_names(start_name: SeasonName) -> Generator[SeasonName, None, None]:
+def season_names(start_name: SeasonName) -> Iterator[SeasonName]:
     names_in_order = [SeasonName.RAINY, SeasonName.COLD, SeasonName.HOT]
     names_looped = cycle(names_in_order)
     skipped_to_start = dropwhile(lambda name: name != start_name, names_looped)
