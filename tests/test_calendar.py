@@ -38,3 +38,14 @@ def test_next_uposatha_out_of_bounds(out_of_bounds):
     calendar = Calendar()
     with pytest.raises(ValueError):
         calendar.next_uposatha(out_of_bounds)
+
+
+@pytest.mark.parametrize(
+    "valid_date,uposatha_falls_on",
+    [
+        (date(2023, 9, 19), date(2023, 9, 29))
+    ]
+)
+def test_valid_next_uposatha(valid_date, uposatha_falls_on):
+    calendar = Calendar()
+    assert calendar.next_uposatha(valid_date).falls_on == uposatha_falls_on
