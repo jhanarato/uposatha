@@ -20,7 +20,21 @@ def test_end_date():
     assert calendar.seasons[-1].last_day == date(2030, 11, 10)
 
 
-def test_current_season_out_of_bounds():
+@pytest.mark.parametrize(
+    "out_of_bounds",
+    [date(2030, 11, 11), date(2010, 2, 28)]
+)
+def test_current_season_out_of_bounds(out_of_bounds):
     calendar = Calendar()
     with pytest.raises(ValueError):
-        calendar.current_season(date(2030, 11, 11))
+        calendar.current_season(out_of_bounds)
+
+
+@pytest.mark.parametrize(
+    "out_of_bounds",
+    [date(2030, 11, 11), date(2010, 2, 28)]
+)
+def test_next_uposatha_out_of_bounds(out_of_bounds):
+    calendar = Calendar()
+    with pytest.raises(ValueError):
+        calendar.next_uposatha(out_of_bounds)
