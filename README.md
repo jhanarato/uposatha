@@ -34,7 +34,7 @@ from uposatha.calendar import Calendar
 cal = Calendar()
 ```
 
-This covers a specific range of dates as we need to know when years have extra months and days as provided. You can see the calender range:
+This covers a specific range of dates as we need to know when years have extra months and days provided. You can see the calender range:
 
 ```python
 >>> cal.start_date
