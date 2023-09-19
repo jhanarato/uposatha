@@ -35,8 +35,3 @@ class Calendar:
         for uposatha in season.uposathas:
             if uposatha.falls_on >= today:
                 return uposatha
-
-    def season_uposatha_seq(self) -> Generator[Tuple[Season, Uposatha], None, None]:
-        for season in self.seasons:
-            for uposatha in season.uposathas:
-                yield season, uposatha
