@@ -26,12 +26,11 @@ class Calendar:
                 current = season
 
         if not current:
-            raise ValueError("No season available.")
+            raise ValueError("Nothing available for this date.")
 
         return current
 
     def next_uposatha(self, today: datetime.date = datetime.date.today()) -> Uposatha:
-        """ Get the next uposatha. If today is the uposatha return today's uposatha. """
         season = self.current_season(today=today)
         for uposatha in season.uposathas:
             if uposatha.falls_on >= today:
