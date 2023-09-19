@@ -43,7 +43,10 @@ def test_next_uposatha_out_of_bounds(out_of_bounds):
 @pytest.mark.parametrize(
     "valid_date,uposatha_falls_on",
     [
-        (date(2023, 9, 19), date(2023, 9, 29))
+        (date(2023, 9, 19), date(2023, 9, 29)),
+        (date(2023, 9, 28), date(2023, 9, 29)),
+        (date(2023, 9, 29), date(2023, 9, 29)),
+        (date(2023, 9, 30), date(2023, 10, 14)),
     ]
 )
 def test_valid_next_uposatha(valid_date, uposatha_falls_on):
