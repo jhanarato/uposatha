@@ -1,4 +1,4 @@
-## Work with the Thai lunar calendar.
+## API for the Thai Lunar Calendar.
 
 This package provides a simple API for working with the seasons, moon days and holidays of the Thai calendar. Some use cases might include creating a printable calendar or sending a notification when there is an upcoming holiday.
 
