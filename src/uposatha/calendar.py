@@ -31,7 +31,14 @@ class Calendar:
         return current
 
     def next_uposatha(self, today: datetime.date = datetime.date.today()) -> Uposatha:
+        next_uposatha = None
         season = self.current_season(today=today)
-        for uposatha in season.uposathas:
-            if uposatha.falls_on >= today:
-                return uposatha
+        future_uposathas = [uposatha for uposatha in season.uposathas
+                            if uposatha.falls_on >= today]
+
+        if future_uposathas:
+            next_uposatha = future_uposathas[0]
+        else:
+            raise ValueError("Nothing available for this date.")
+
+        return next_uposatha
