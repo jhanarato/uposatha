@@ -50,6 +50,15 @@ When created, the calendar will generate a tuple of all seasons:
 62
 ```
 
+There are two helper functions:
+
+```python
+cal.next_uposatha()
+cal.current_season()
+```
+
+These return instances of the classes described below.
+
 ### The Season Class
 
 `Season` is defined in the `uposatha.elements` module:
@@ -94,3 +103,42 @@ And we have another enum - `MoonPhase`:
 
 ### The Holiday Class
 
+There are four holidays:
+
+- Vesak Day
+- Magha Puja
+- Asalha Puja
+- Pavarana Day
+
+`Holiday` instances can be found in two ways:
+
+```python
+>>> vesak = season.holidays[0]
+>>> no_holiday = uposatha.holiday
+```
+
+Note that when we created `uposatha` it was not a holiday. `no_holiday` is `None`. Holidays also have a reference to their uposatha:
+
+```python
+>>> vesak.uposatha.number_in_season
+6
+```
+
+The enum `HolidayName` is in `uposatha.elements`:
+
+```python
+>>> vesak.name
+<HolidayName.VESAK: 'Vesak Day'>
+```
+
+### The HalfMoon Class
+
+There is a tuple of half moons in each season. Each is just a date and moon phase.
+
+```python
+>>> half_moon = season.half_moons[0]
+>>> half_moon.moon_phase
+<MoonPhase.WANING: 'Waning'>
+>>> half_moon.falls_on
+datetime.date(2010, 3, 8)
+```
