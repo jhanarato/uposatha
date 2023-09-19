@@ -44,7 +44,7 @@ class Uposatha:
     moon_phase: MoonPhase
 
     @property
-    def holiday(self) -> "Holiday":
+    def holiday(self) -> "Holiday | None":
         return lookup_holiday(self)
 
 
