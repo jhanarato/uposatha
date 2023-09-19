@@ -173,7 +173,7 @@ def seq_to_position(length: int):
     return tuple(range(1, length + 1))
 
 
-def phases(length: int, p: list[MoonPhase]) -> tuple[MoonPhase]:
+def phases(length: int, p: Iterable[MoonPhase]) -> tuple[MoonPhase, ...]:
     p = cycle(p)
     p = islice(p, length)
     return tuple(p)
