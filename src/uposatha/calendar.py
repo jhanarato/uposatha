@@ -1,5 +1,4 @@
 import datetime
-from typing import Generator, Tuple
 
 from uposatha.configure import get_default_configuration
 from uposatha.generate import generate_seasons, uposatha_holidays
@@ -31,7 +30,6 @@ class Calendar:
         return current
 
     def next_uposatha(self, today: datetime.date = datetime.date.today()) -> Uposatha:
-        next_uposatha = None
         season = self.current_season(today=today)
         future_uposathas = [uposatha for uposatha in season.uposathas
                             if uposatha.falls_on >= today]

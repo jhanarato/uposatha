@@ -124,8 +124,7 @@ def generate_holidays(season_name: SeasonName,
                     name=HolidayName.ASALHA,
                     uposatha=uposathas[7]),
             )
-        case _:
-            holidays = ()
+
     return holidays
 
 
