@@ -142,3 +142,31 @@ There is a tuple of half moons in each season. Each is just a date and moon phas
 >>> half_moon.falls_on
 datetime.date(2010, 3, 8)
 ```
+
+### Calendar Configuration
+
+In order to generate the calendar some information is needed. This includes:
+
+- Start date
+- Start season
+- End Season
+- End year
+- Years with extra month added.
+- Years with extra day added.
+
+This information is specified in the `configure` module and is available via the calendar object:
+
+```python
+>>> cal.config.start_date
+datetime.date(2010, 2, 28)
+>>> cal.config.extra_day_years
+[2016, 2020, 2025, 2030]
+```
+
+**NB: If anyone knows this information beyond 2030, let me know!**
+
+### Acknowledgements
+
+The starting point of this project was the [Forest Sangha calendars](https://forestsangha.org/community/calendars/year_planners/). They in turn provide a link to an `ical` file for importing into various calendar applications. The code for generating this file is available at the [splendidmoons github page](https://github.com/splendidmoons). This is written in Go and does not provide a licence so I began by parsing the file in python. You can see the code at https://github.com/jhanarato/uposatha-ical
+
+Leveraging that, I went back and wrote the uposatha package from scratch, testing with the data from `uposatha-ical`. Thanks to the Forest Sangha and the Splendid Moons developers!
