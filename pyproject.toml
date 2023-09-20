@@ -4,11 +4,11 @@ build-backend = "hatchling.build"
 
 [project]
 name = "uposatha"
-version = "0.0.1"
+version = "0.1.0"
 authors = [
     {name = "Ajahn Jhanarato", email = "jhanrato@gmail.com"},
 ]
-description = "An API for the Thai (Mahanikaya) Calendar"
+description = "API for the Thai Lunar Calendar"
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
@@ -16,6 +16,9 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+
+[project.optional-dependencies]
+dev = ["pytest"]
 
 [project.urls]
 "Homepage" = "https://github.com/jhanarato/uposatha"
