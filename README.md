@@ -170,3 +170,9 @@ datetime.date(2010, 2, 28)
 The starting point of this project was the [Forest Sangha calendars](https://forestsangha.org/community/calendars/year_planners/). They in turn provide a link to an `ical` file for importing into various calendar applications. The code for generating this file is available at the [splendidmoons github page](https://github.com/splendidmoons). This is written in Go and does not provide a licence so I began by parsing the file in python. You can see the code at https://github.com/jhanarato/uposatha-ical
 
 Leveraging that, I went back and wrote the uposatha package from scratch, testing with the data from `uposatha-ical`. Thanks to the Forest Sangha and the Splendid Moons developers!
+
+### Calculations
+
+I've written up my understanding of the Thai calendar here:
+
+[The Algorithm](Algorithm.md)
