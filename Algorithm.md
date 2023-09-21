@@ -28,7 +28,7 @@ The moon phases alternate between full and moon, always starting with a new moon
 
 ### Half moon observance
 
-The half moon days occur on both waxing and waning moon phases, adding the following number of days from the day before the season begins, starting with a waning half moon:
+The half moon days occur on both waxing and waning moon phases, always 8 days after the previous uposatha, whether it is a 15 or 14 day uposatha. This sequence can be used:
 
 `(8, 15, 15, 14, 15, 15, 15, 14)`
 
