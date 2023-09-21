@@ -60,6 +60,12 @@ Half moon durations:
 
 `(8, 15, 15, 14, 15, 15, 15, 15)`
 
+Again these are stored in a list:
+
+`[2016, 2020, 2025, 2030]`
+
+Note that these do not coincide with extra month years. As far as I know they are mutually exclusive.
+
 ## Calendar bounds
 
 At some point we don't know when the extra month and extra days are as they have not been announced (or this package is out of date!) Thus we start the generation with the day before a given season in a given year and end with a given season and year. For simplicity we only generate complete seasons.
