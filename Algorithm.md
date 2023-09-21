@@ -32,7 +32,7 @@ The half moon days occur on both waxing and waning moon phases, adding the follo
 
 `(8, 15, 15, 14, 15, 15, 15, 14)`
 
-## A long hot season
+### A long hot season
 
 To keep the lunar calendar in synch with the solar calendar a hot season is declared to be long, by adding two extra uposathas of 15 days. This gives us the following sequence to be added to the day before the season:
 
@@ -48,7 +48,7 @@ The long hot month years are stored internally as a list:
 
 This will need to be updated to deal with dates beyond 2030.
 
-## Extra days
+### Extra days
 
 Given that the actual orbit of the moon is 29.53 days, the calendar still gets out of synch. When declared, a day is added to the 7th uposatha of the hot season. 
 
